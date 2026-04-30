@@ -1,6 +1,6 @@
 """
-GBIF Human Observations Dashboard - Cyberpunk Edition
-Single-file Streamlit app for Streamlit Cloud deployment.
+GBIF Human Observations Dashboard - Cyberpunk Edition v2
+Single-file Streamlit app · Español · Hexbin cyberpunk map
 """
 import streamlit as st
 import pandas as pd
@@ -8,11 +8,12 @@ import json
 import os
 import numpy as np
 import folium
-from folium.plugins import HeatMap
+from folium.plugins import FastMarkerCluster, MarkerCluster
 from streamlit_folium import st_folium
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
+import plotly.figure_factory as ff
 
 st.set_page_config(
     page_title="GBIF HUMAN OBS // DASHBOARD",
@@ -55,10 +56,6 @@ CYBER_RED = "#ff3040"
 CYBER_WHITE = "#e0e0f0"
 CYBER_GRAY = "#7070a0"
 CYBER_DIM = "#303055"
-GLOW_CYAN = "0 0 12px rgba(0,229,255,0.3)"
-GLOW_MAGENTA = "0 0 12px rgba(255,0,229,0.3)"
-GLOW_GREEN = "0 0 12px rgba(0,255,136,0.3)"
-GLOW_AMBER = "0 0 12px rgba(255,170,0,0.3)"
 
 # ── Cyberpunk CSS ─────────────────────────────────────────────
 st.markdown(f"""
@@ -73,8 +70,8 @@ st.markdown(f"""
     content: "";
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background:
-        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none; z-index: 0;
 }}
@@ -102,35 +99,30 @@ h1, h2, h3 {{
     text-align: center;
     position: relative;
     clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+    transition: border-color 0.3s, box-shadow 0.3s;
 }}
-.cyber-card::before {{
-    content: "";
-    position: absolute; inset: 0;
-    border: 1px solid {CYBER_CYAN};
-    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: -1;
+.cyber-card:hover {{
+    border-color: {CYBER_CYAN};
+    box-shadow: 0 0 15px rgba(0,229,255,0.15), inset 0 0 15px rgba(0,229,255,0.03);
 }}
-.cyber-card:hover::before {{ opacity: 0.5; }}
 
 .cyber-kpi-value {{
     font-family: 'Share Tech Mono', monospace;
-    font-size: 2.4rem;
+    font-size: 2.3rem;
     font-weight: 700;
     line-height: 1.1;
 }}
 .cyber-kpi-label {{
     font-family: 'Rajdhani', sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     color: {CYBER_GRAY};
-    margin-top: 4px;
+    margin-top: 6px;
 }}
 .cyber-kpi-sub {{
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: {CYBER_DIM};
     margin-top: 4px;
 }}
@@ -170,16 +162,13 @@ h1, h2, h3 {{
     color: {CYBER_WHITE};
 }}
 
-.cyber-tag {{
-    display: inline-block;
-    background: rgba(0,229,255,0.08);
-    border: 1px solid rgba(0,229,255,0.2);
-    padding: 4px 12px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
+.cyber-section-title {{
+    font-family: 'Share Tech Mono', monospace !important;
     color: {CYBER_CYAN};
-    margin: 2px;
-    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0,229,255,0.3);
+    letter-spacing: 4px;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
 }}
 
 .stTabs [data-baseweb="tab-list"] {{
@@ -199,13 +188,7 @@ h1, h2, h3 {{
     color: {CYBER_CYAN} !important;
     background: rgba(0,229,255,0.06) !important;
     border-color: {CYBER_CYAN} !important;
-    box-shadow: {GLOW_CYAN};
-}}
-
-.stSelectbox div[data-baseweb="select"] > div {{
-    background: {BG_CARD} !important;
-    border-color: {CYBER_DIM} !important;
-    font-family: 'Share Tech Mono', monospace;
+    box-shadow: 0 0 12px rgba(0,229,255,0.3);
 }}
 
 .cyber-footer {{
@@ -216,28 +199,17 @@ h1, h2, h3 {{
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.65rem;
     color: {CYBER_DIM};
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }}
 
 .cyber-radar-box {{
     background: {BG_CARD};
     border: 1px solid {CYBER_DIM};
     padding: 12px 18px;
-    border-left: 3px solid {CYBER_CYAN};
     margin: 8px 0;
     font-family: 'Rajdhani', sans-serif;
 }}
 
-.cyber-section-title {{
-    font-family: 'Share Tech Mono', monospace !important;
-    color: {CYBER_CYAN};
-    text-shadow: 0 0 8px rgba(0,229,255,0.3);
-    letter-spacing: 3px;
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-}}
-
-/* Glitch hover effect on titles */
 @keyframes glitch {{
     0% {{ text-shadow: 0 0 10px {CYBER_CYAN}; }}
     50% {{ text-shadow: 0 0 20px {CYBER_MAGENTA}, 0 0 30px {CYBER_CYAN}; }}
@@ -245,6 +217,14 @@ h1, h2, h3 {{
 }}
 .cyber-title:hover {{
     animation: glitch 0.5s ease;
+}}
+
+.cyber-blink {{
+    animation: blink 2s infinite;
+}}
+@keyframes blink {{
+    0%, 100% {{ opacity: 1; }}
+    50% {{ opacity: 0.3; }}
 }}
 </style>
 """, unsafe_allow_html=True)
@@ -327,7 +307,7 @@ def chart_area(df, xcol, ycol, title, color=CYBER_CYAN):
         x=df[xcol], y=df[ycol],
         fill="tozeroy", mode="lines",
         line=dict(color=color, width=2),
-        fillcolor=f"rgba({','.join(str(int(c)) for c in [0,229,255])},0.12)",
+        fillcolor=f"rgba(0,229,255,0.12)",
         hovertemplate="%{{x}}: <b>%{{y:,.0f}}</b><extra></extra>",
     ))
     fig.update_layout(title=title, xaxis_title="", yaxis_title="")
@@ -354,14 +334,34 @@ def chart_radar(dimensions, values, title):
     return fig
 
 
-# ── Map builder ────────────────────────────────────────────────
-def build_map(df):
-    """Cyberpunk holographic map of human observations."""
+def chart_hexbin(df, title):
+    """Hexbin density chart usando plotly (alternativa al heatmap)."""
+    fig = ff.create_hexbin_mapbox(
+        data_frame=df, lat="lat", lon="lon",
+        nx=30, opacity=0.5,
+        labels={"color": "Obs"},
+        color_continuous_scale=[
+            [0.0, "#06060c"], [0.15, "#0a0030"], [0.3, "#0000aa"],
+            [0.5, "#0044ff"], [0.65, "#00aaff"], [0.8, "#00e5ff"],
+            [0.9, "#ff00e5"], [1.0, "#ff4088"],
+        ],
+        mapbox_style="carto-darkmatter",
+        zoom=4, center={"lat": -35.5, "lon": -71.5},
+        height=550,
+    )
+    fig.update_layout(title=title, margin=dict(l=0, r=0, t=50, b=0),
+                       coloraxis_showscale=False)
+    return fig
+
+
+# ── Map builder (cyberpunk cluster + hexbin) ───────────────────
+def build_cluster_map(df, mode="cluster"):
+    """Mapa cyberpunk con clusters neon o hexbin interactivo."""
     m = folium.Map(
         location=[-35.5, -71.5], zoom_start=5,
         tiles=None, control_scale=True,
     )
-    # Cyberpunk dark basemap
+    # Base oscura
     folium.TileLayer(
         tiles="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
         attr='© OSM | CartoDB',
@@ -369,14 +369,62 @@ def build_map(df):
         control=False,
     ).add_to(m)
 
-    # Neon heatmap
-    if len(df) > 0:
-        coords = df[["lat", "lon"]].values.tolist()
-        HeatMap(
-            coords, name="OBS_DENSITY",
-            radius=10, blur=8, max_zoom=8,
-            gradient={0.15: "#0a0030", 0.3: "#0000aa", 0.45: "#0044ff",
-                       0.6: "#00aaff", 0.75: "#00e5ff", 0.9: "#ff00e5", 1.0: "#ff4088"},
+    if len(df) == 0:
+        return m
+
+    if mode == "cluster":
+        # FastMarkerCluster con estilo cyberpunk
+        callback = """
+        function (row) {
+            var marker;
+            marker = L.circleMarker(new L.LatLng(row[0], row[1]), {
+                radius: 2.5,
+                fillColor: '#00e5ff',
+                color: '#00e5ff',
+                weight: 1,
+                opacity: 0.6,
+                fillOpacity: 0.5
+            });
+            return marker;
+        }
+        """
+        # Submuestrear para performance
+        sample = df.sample(min(len(df), 8000)) if len(df) > 8000 else df
+        FastMarkerCluster(
+            data=sample[["lat", "lon"]].values.tolist(),
+            name="CLUSTERS NEON",
+            callback=callback,
+            options={
+                "maxClusterRadius": 40,
+                "spiderfyOnMaxZoom": True,
+                "showCoverageOnHover": False,
+                "zoomToBoundsOnClick": True,
+                "iconCreateFunction": f"""
+                function(cluster) {{
+                    var count = cluster.getChildCount();
+                    var size = count < 100 ? 30 : count < 500 ? 40 : count < 2000 ? 50 : 60;
+                    var color = count < 100 ? '#00e5ff' : count < 500 ? '#00ff88' : count < 2000 ? '#ffaa00' : '#ff00e5';
+                    return L.divIcon({{
+                        html: '<div style="background:' + color + '20; border:2px solid ' + color +
+                              '; border-radius:50%; width:' + size + 'px; height:' + size +
+                              'px; display:flex; align-items:center; justify-content:center;' +
+                              ' font-family:monospace; font-size:11px; color:' + color +
+                              '; text-shadow:0 0 8px ' + color + '; box-shadow:0 0 15px ' +
+                              color + '40, inset 0 0 10px ' + color + '20;">' + count + '</div>',
+                        className: '', iconSize: L.point(size, size)
+                    }});
+                }}
+                """
+            },
+        ).add_to(m)
+
+    elif mode == "hexbin":
+        folium.plugins.HeatMap(
+            data=df[["lat", "lon"]].values.tolist(),
+            name="HEXBIN DENSITY",
+            radius=15, blur=10, max_zoom=8,
+            gradient={0.1: "#0a0030", 0.25: "#0000aa", 0.4: "#0044ff",
+                       0.55: "#00aaff", 0.7: "#00e5ff", 0.85: "#ff00e5", 1.0: "#ff4088"},
             overlay=True,
         ).add_to(m)
 
@@ -384,7 +432,7 @@ def build_map(df):
     return m
 
 
-# ── Load data ──────────────────────────────────────────────────
+# ── Load all data ──────────────────────────────────────────────
 kpi = load_json("kpi") or {"total": 20801113, "human_obs": 18662018, "with_coords": 20636696, "absent": 1170113, "fossil": 7379}
 phylum_human = load_json("phylum_human") or []
 class_human = load_json("class_human") or []
@@ -421,22 +469,22 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("""<div class="cyber-divider"></div>""", unsafe_allow_html=True)
+    cyber_divider()
 
     tab = st.radio("",
-        ["▸ RESUME", "▸ TAXONOMY", "▸ SPATIAL", "▸ TEMPORAL", "▸ QUALITY", "▸ BIASES"],
+        ["▸ RESUMEN", "▸ TAXONOMIA", "▸ ESPACIAL", "▸ TEMPORAL", "▸ CALIDAD", "▸ SESGOS"],
         label_visibility="collapsed",
     )
 
-    st.markdown("""<div class="cyber-divider"></div>""", unsafe_allow_html=True)
+    cyber_divider()
 
     st.markdown(f"""
     <div style="font-family:'Share Tech Mono',monospace; font-size:0.55rem; color:{CYBER_DIM};
                 line-height:2; letter-spacing:1px;">
-        <div>DATA SOURCE: GBIF.ORG</div>
-        <div>KINGDOM: ANIMALIA</div>
-        <div>REGION: CHILE (CL)</div>
-        <div>TOTAL RECORDS: {numfmt(total)}</div>
+        <div>FUENTE: GBIF.ORG</div>
+        <div>REINO: ANIMALIA</div>
+        <div>REGIÓN: CHILE (CL)</div>
+        <div>TOTAL: {numfmt(total)} REG</div>
         <div>CRS: EPSG:4326</div>
     </div>
     """, unsafe_allow_html=True)
@@ -451,44 +499,55 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ───────────────────────────────────────────────────────────────
-# TAB 1: RESUME
-# ───────────────────────────────────────────────────────────────
-if tab == "▸ RESUME":
+# ═══════════════════════════════════════════════════════════════
+# TAB 1: RESUMEN
+# ═══════════════════════════════════════════════════════════════
+if tab == "▸ RESUMEN":
     kpi_row([
-        (numfmt(total), "REGISTROS TOTALES", CYBER_AMBER, f"GBIF Animal Kingdom"),
-        (numfmt(human), "HUMAN OBSERVATIONS", CYBER_CYAN, f"{pctfmt(human,total)} del total"),
-        (numfmt(with_coords), "GEO-REFERENCED", CYBER_GREEN, f"{pctfmt(with_coords,total)} con lat/lon"),
-        (numfmt(absent), "ABSENT FLAGGED", CYBER_RED, f"{pctfmt(absent,total)} marked absent"),
+        (numfmt(total), "REGISTROS TOTALES", CYBER_AMBER, "GBIF Reino Animalia"),
+        (numfmt(human), "OBSERVACIONES HUMANAS", CYBER_CYAN, f"{pctfmt(human,total)} del total"),
+        (numfmt(with_coords), "GEORREFERENCIADOS", CYBER_GREEN, f"{pctfmt(with_coords,total)} con lat/lon"),
+        (numfmt(absent), "REGISTROS ABSENT", CYBER_RED, f"{pctfmt(absent,total)} marcados ausentes"),
     ])
     cyber_divider()
 
-    # Highlights
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        st.metric("Chordata", "89.7%", "domina human obs", delta_color="off")
+        st.metric("Chordata", "89.7%", "domina obs. humanas", delta_color="off")
     with c2:
-        st.metric("Sin Class", "40.3%", "8.3M sin asignar", delta_color="off")
+        st.metric("Sin Clase", "40.3%", "8.3M sin asignar", delta_color="off")
     with c3:
-        st.metric("Sin precision", "95.0%", "sin incertidumbre", delta_color="off")
+        st.metric("Sin Precisión", "95.0%", "sin incertidumbre", delta_color="off")
     with c4:
-        st.metric("eBird/iNat", "2010", "explosion post apps", delta_color="off")
+        st.metric("eBird/iNat", "2010", "explosión post apps", delta_color="off")
 
     cyber_divider()
+
+    st.markdown('<div class="cyber-section-title">◈ MAPA DE DENSIDAD · OBSERVACIONES HUMANAS</div>',
+                 unsafe_allow_html=True)
+
+    map_mode = st.radio(
+        "Visualización:",
+        ["Hexbin Interactivo (Plotly)", "Clusters Neon (Folium)", "Densidad Holográfica (Folium)"],
+        horizontal=True, label_visibility="collapsed",
+    )
 
     col_map, col_chart = st.columns([5, 4])
 
     with col_map:
-        st.markdown('<div class="cyber-section-title">◈ HUMAN OBSERVATION DENSITY MAP</div>',
-                     unsafe_allow_html=True)
         if coords_df is not None and len(coords_df) > 0:
-            m = build_map(coords_df)
-            st_folium(m, height=480, width="100%")
+            if "Plotly" in map_mode:
+                fig_hx = chart_hexbin(coords_df, "DENSIDAD HEXBIN · OBSERVACIONES HUMANAS")
+                st.plotly_chart(fig_hx, use_container_width=True)
+            else:
+                mode = "cluster" if "Clusters" in map_mode else "hexbin"
+                m = build_cluster_map(coords_df, mode=mode)
+                st_folium(m, height=500, width="100%")
         else:
-            st.warning("NO COORDINATE DATA FOUND")
+            st.warning("NO SE ENCONTRARON COORDENADAS DE MUESTRA")
 
     with col_chart:
-        st.markdown('<div class="cyber-section-title">◈ DATA SOURCES</div>',
+        st.markdown('<div class="cyber-section-title">◈ FUENTE DE LOS DATOS</div>',
                      unsafe_allow_html=True)
         if basis_dist:
             df = pd.DataFrame(basis_dist)
@@ -499,41 +558,43 @@ if tab == "▸ RESUME":
                 "FOSSIL_SPECIMEN": CYBER_RED,
             }
             df["color"] = df["basis"].map(colors_basis).fillna(CYBER_DIM)
-            fig = chart_hbar(df, "n", "basis", "BASIS OF RECORD DISTRIBUTION",
+            fig = chart_hbar(df, "n", "basis", "DISTRIBUCIÓN POR BASIS OF RECORD",
                              color_col="basis", colors=df["color"].tolist())
             fig.update_layout(height=220)
             st.plotly_chart(fig, use_container_width=True)
 
-        st.markdown('<div class="cyber-section-title">◈ YEARLY EVOLUTION</div>',
+        st.markdown('<div class="cyber-section-title">◈ EVOLUCIÓN ANUAL</div>',
                      unsafe_allow_html=True)
         if year_data:
             df_y = pd.DataFrame(year_data)
-            fig2 = chart_area(df_y, "year", "n", "HUMAN OBSERVATIONS PER YEAR")
+            fig2 = chart_area(df_y, "year", "n", "OBSERVACIONES HUMANAS POR AÑO")
             fig2.update_layout(height=220)
             st.plotly_chart(fig2, use_container_width=True)
 
-    info("**89.7%** of all GBIF Animalia records for Chile are **HUMAN_OBSERVATION**. "
-         "This means citizen science platforms (eBird, iNaturalist) dominate the dataset, "
-         "introducing significant taxonomic and spatial biases.")
+    info("El **89.7%** de los registros GBIF Animalia para Chile son **HUMAN_OBSERVATION**. "
+         "Esto significa que la ciencia ciudadana (eBird, iNaturalist) domina el dataset, "
+         "introduciendo sesgos taxonómicos y espaciales significativos.")
 
-# ───────────────────────────────────────────────────────────────
-# TAB 2: TAXONOMY
-# ───────────────────────────────────────────────────────────────
-elif tab == "▸ TAXONOMY":
+# ═══════════════════════════════════════════════════════════════
+# TAB 2: TAXONOMIA
+# ═══════════════════════════════════════════════════════════════
+elif tab == "▸ TAXONOMIA":
+    st.markdown('<div class="cyber-section-title">◈ ¿QUÉ SE OBSERVA? · DISTRIBUCIÓN TAXONÓMICA</div>',
+                 unsafe_allow_html=True)
+
+    chordata_n = next((d["n"] for d in phylum_human if d["phylum"]=="Chordata"), 0)
+    arthropoda_n = next((d["n"] for d in phylum_human if d["phylum"]=="Arthropoda"), 0)
+    mollusca_n = next((d["n"] for d in phylum_human if d["phylum"]=="Mollusca"), 0)
+    total_human_phylum = sum(d["n"] for d in phylum_human)
+
     kpi_row([
-        (numfmt(next((d["n"] for d in phylum_human if d["phylum"]=="Chordata"), 0)),
-         "CHORDATA (HUMAN)", CYBER_CYAN,
-         pctfmt(next((d["n"] for d in phylum_human if d["phylum"]=="Chordata"), 0),
-                sum(d["n"] for d in phylum_human))),
-        (numfmt(next((d["n"] for d in phylum_human if d["phylum"]=="Arthropoda"), 0)),
-         "ARTHROPODA (HUMAN)", CYBER_AMBER,
-         pctfmt(next((d["n"] for d in phylum_human if d["phylum"]=="Arthropoda"), 0),
-                sum(d["n"] for d in phylum_human))),
-        (numfmt(next((d["n"] for d in phylum_human if d["phylum"]=="Mollusca"), 0)),
-         "MOLLUSCA (HUMAN)", CYBER_MAGENTA,
-         pctfmt(next((d["n"] for d in phylum_human if d["phylum"]=="Mollusca"), 0),
-                sum(d["n"] for d in phylum_human))),
-        (f"{len(phylum_human)}", "PHYLA DETECTED", CYBER_PURPLE, "in human observations"),
+        (numfmt(chordata_n), "CHORDATA", CYBER_CYAN,
+         pctfmt(chordata_n, total_human_phylum)),
+        (numfmt(arthropoda_n), "ARTHROPODA", CYBER_AMBER,
+         pctfmt(arthropoda_n, total_human_phylum)),
+        (numfmt(mollusca_n), "MOLLUSCA", CYBER_MAGENTA,
+         pctfmt(mollusca_n, total_human_phylum)),
+        (str(len(phylum_human)), "PHYLA DETECTADOS", CYBER_PURPLE, "en obs. humanas"),
     ])
     cyber_divider()
 
@@ -545,106 +606,127 @@ elif tab == "▸ TAXONOMY":
                              "Mollusca": CYBER_MAGENTA, "Echinodermata": CYBER_PINK,
                              "Cnidaria": CYBER_PURPLE, "Annelida": CYBER_GREEN}
             df["c"] = df["phylum"].map(phylum_colors).fillna(CYBER_DIM)
-            fig = chart_hbar(df, "n", "phylum", "PHYLUM IN HUMAN OBSERVATIONS",
+            fig = chart_hbar(df, "n", "phylum", "PHYLUM EN OBSERVACIONES HUMANAS",
                              color_col="phylum", colors=df["c"].tolist())
             st.plotly_chart(fig, use_container_width=True)
     with c2:
         if class_human:
             df = pd.DataFrame([d for d in class_human if d["class"]!="Sin dato"][:12])
-            fig2 = chart_hbar(df, "n", "class", "TOP CLASSES IN HUMAN OBSERVATIONS",
+            fig2 = chart_hbar(df, "n", "class", "CLASES EN OBSERVACIONES HUMANAS",
                               color_col="phylum")
             st.plotly_chart(fig2, use_container_width=True)
 
-    st.markdown('<div class="cyber-section-title">◈ MOST OBSERVED SPECIES</div>',
+    st.markdown('<div class="cyber-section-title">◈ ESPECIES MÁS OBSERVADAS</div>',
                  unsafe_allow_html=True)
     if species_data:
         df = pd.DataFrame(species_data[:15])
-        fig3 = chart_hbar(df, "n", "species", "HUMAN OBSERVATION · TOP 15 SPECIES",
+        fig3 = chart_hbar(df, "n", "species", "TOP 15 ESPECIES · OBSERVACIÓN HUMANA",
                           color_col="class")
         st.plotly_chart(fig3, use_container_width=True)
 
-    warn("**Aves outnumber Insecta 115:1 in human observations.** "
-         "Despite insects being the most diverse animal group on Earth, birdwatchers "
-         "using eBird dominate the dataset. Museum collections (PRESERVED_SPECIMEN) "
-         "show the opposite pattern, with insects comprising the majority.")
+    aves_val = next((d["n"] for d in aves_data if d["class"]=="Aves"), 0)
+    insecta_val = next((d["n"] for d in aves_data if d["class"]=="Insecta"), 0)
+    ratio = aves_val / insecta_val if insecta_val > 0 else 0
 
-# ───────────────────────────────────────────────────────────────
-# TAB 3: SPATIAL
-# ───────────────────────────────────────────────────────────────
-elif tab == "▸ SPATIAL":
-    st.markdown('<div class="cyber-section-title">◈ HUMAN OBSERVATION DENSITY · CHILE</div>',
+    warn(f"**Hay {ratio:.0f} aves por cada insecto registrado.** "
+         f"A pesar de que los insectos son el grupo animal más diverso del planeta, "
+         f"los observadores de aves en eBird dominan abrumadoramente el dataset. "
+         f"En colecciones de museo (PRESERVED_SPECIMEN) el patrón se invierte: "
+         f"los insectos son mayoría (249K especímenes).")
+
+# ═══════════════════════════════════════════════════════════════
+# TAB 3: ESPACIAL
+# ═══════════════════════════════════════════════════════════════
+elif tab == "▸ ESPACIAL":
+    st.markdown('<div class="cyber-section-title">◈ ¿DÓNDE SE OBSERVA? · CONCENTRACIÓN GEOGRÁFICA</div>',
                  unsafe_allow_html=True)
 
     if coords_df is not None and len(coords_df) > 0:
-        m = build_map(coords_df)
-        st_folium(m, height=550, width="100%")
+        map_mode2 = st.radio(
+            "Visualización:",
+            ["Hexbin Interactivo (Plotly)", "Clusters Neon (Folium)", "Densidad Holográfica (Folium)"],
+            horizontal=True, label_visibility="collapsed",
+        )
+        if "Plotly" in map_mode2:
+            fig_hx = chart_hexbin(coords_df, "DENSIDAD HEXBIN · OBSERVACIONES HUMANAS EN CHILE")
+            st.plotly_chart(fig_hx, use_container_width=True)
+        else:
+            mode = "cluster" if "Clusters" in map_mode2 else "hexbin"
+            m = build_cluster_map(coords_df, mode=mode)
+            st_folium(m, height=600, width="100%")
 
-    info("Observations concentrate in urban and coastal areas (Santiago, Valparaiso, Concepcion). "
-         "Patagonia, the Altiplano, and Andean regions show significant sampling gaps.")
+    info("Las observaciones humanas se concentran en zonas urbanas y costeras "
+         "(Santiago, Valparaíso, Concepción). La Patagonia interior, el Altiplano "
+         "y la alta cordillera muestran vacíos de muestreo significativos.")
 
     if prov_data:
         df = pd.DataFrame(prov_data[:15])
         df = df[~df["provincia"].str.match(r"^\d+$", na=False)]
-        fig = chart_hbar(df, "n", "provincia", "TOP PROVINCES · HUMAN OBSERVATIONS")
+        fig = chart_hbar(df, "n", "provincia", "TOP PROVINCIAS · OBSERVACIONES HUMANAS")
         st.plotly_chart(fig, use_container_width=True)
 
     c1, c2, c3 = st.columns(3)
     with c1:
-        st.metric("Top 5 Regions", "~45%", "concentrate observations", delta_color="off")
+        st.metric("Top 5 Regiones", "~45%", "concentran observaciones", delta_color="off")
     with c2:
-        st.metric("No Province Data", "7.5M", "36% missing stateProvince", delta_color="off")
+        st.metric("Sin Provincia", "7.5M", "36% sin stateProvince", delta_color="off")
     with c3:
-        st.metric("Urban Bias", "HIGH", "Santiago > Patagonia", delta_color="off")
+        st.metric("Sesgo Urbano", "ALTO", "Santiago >> Patagonia", delta_color="off")
 
-# ───────────────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
 # TAB 4: TEMPORAL
-# ───────────────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════
 elif tab == "▸ TEMPORAL":
+    st.markdown('<div class="cyber-section-title">◈ ¿CUÁNDO SE OBSERVA? · EVOLUCIÓN Y ESTACIONALIDAD</div>',
+                 unsafe_allow_html=True)
+
     if year_data:
         df = pd.DataFrame(year_data)
         peak = df.loc[df["n"].idxmax()]
         recent = df[df["year"] >= 2020]["n"].sum()
         all_sum = df["n"].sum()
         kpi_row([
-            (f"{int(peak['year'])}", "PEAK YEAR", CYBER_CYAN, f"{peak['n']:,.0f} records"),
-            (numfmt(recent), "2020-2024 TOTAL", CYBER_AMBER, pctfmt(recent, all_sum)),
-            (numfmt(all_sum), "1950+ TOTAL", CYBER_GREEN, "Human Observations"),
-            ("x370", "GROWTH 1970-2023", CYBER_MAGENTA, "explosion post-eBird"),
+            (f"{int(peak['year'])}", "AÑO PICO", CYBER_CYAN, f"{peak['n']:,.0f} registros"),
+            (numfmt(recent), "TOTAL 2020-2024", CYBER_AMBER, pctfmt(recent, all_sum)),
+            (numfmt(all_sum), "TOTAL 1950+", CYBER_GREEN, "Observaciones Humanas"),
+            ("x370", "CRECIMIENTO 1970-2023", CYBER_MAGENTA, "explosión post-eBird"),
         ])
 
     cyber_divider()
 
     if year_data:
         fig = chart_area(pd.DataFrame(year_data), "year", "n",
-                         "HUMAN OBSERVATIONS PER YEAR (1950-2025)")
+                         "OBSERVACIONES HUMANAS POR AÑO (1950-2025)")
         fig.update_layout(height=350)
         st.plotly_chart(fig, use_container_width=True)
 
-    info("**Post-2010 explosion.** eBird (2002) and iNaturalist (2008) revolutionized citizen science. "
-         "Between 2020-2024, 38% of all human observations were recorded. "
-         "COVID-19 lockdowns increased backyard birding activity.")
+    info("**Explosión post-2010.** eBird (2002) e iNaturalist (2008) revolucionaron "
+         "la ciencia ciudadana. Entre 2020 y 2024 se registró el 38% de todas las "
+         "observaciones humanas de la historia. La pandemia de COVID-19 impulsó el "
+         "avistamiento de aves de traspatio.")
 
     if month_data:
-        months = {1:"JAN",2:"FEB",3:"MAR",4:"APR",5:"MAY",6:"JUN",
-                  7:"JUL",8:"AUG",9:"SEP",10:"OCT",11:"NOV",12:"DEC"}
+        months = {1:"ENE",2:"FEB",3:"MAR",4:"ABR",5:"MAY",6:"JUN",
+                  7:"JUL",8:"AGO",9:"SEP",10:"OCT",11:"NOV",12:"DIC"}
         df = pd.DataFrame(month_data)
         df["mes"] = df["month"].map(months)
-        fig2 = px.bar(df, x="mes", y="n", title="SEASONALITY · HUMAN OBSERVATIONS BY MONTH",
+        fig2 = px.bar(df, x="mes", y="n",
+                       title="ESTACIONALIDAD · OBSERVACIONES POR MES",
                        color_discrete_sequence=[CYBER_CYAN])
         fig2.update_traces(hovertemplate="%{x}: <b>%{y:,.0f}</b><extra></extra>",
                             marker=dict(opacity=0.7))
         fig2.update_layout(showlegend=False, xaxis_title="", yaxis_title="")
         st.plotly_chart(fig2, use_container_width=True)
 
-    st.markdown('<div class="cyber-section-title">◈ KEY EVENTS</div>',
+    st.markdown('<div class="cyber-section-title">◈ HITOS TEMPORALES</div>',
                  unsafe_allow_html=True)
     events = [
-        ("2002", "eBird launch", "Bird observation goes digital"),
-        ("2008", "iNaturalist launch", "All-taxa citizen science platform"),
-        ("2010", ">800K records/year", "Citizen platforms reach maturity"),
-        ("2014", "GBIF Chile node", "National data integration begins"),
-        ("2020", "COVID-19", "Backyard birding surge during lockdowns"),
-        ("2022", "1.8M peak", "All-time annual record for Chile"),
+        ("2002", "Lanzamiento eBird", "Observación de aves digital"),
+        ("2008", "Lanzamiento iNaturalist", "Plataforma para todos los taxones"),
+        ("2010", ">800K registros/año", "Maduración de ciencia ciudadana"),
+        ("2014", "Nodo GBIF Chile", "Integración nacional de datos"),
+        ("2020", "COVID-19", "Auge de avistamientos desde casa"),
+        ("2022", "Pico 1.8M", "Récord absoluto anual para Chile"),
     ]
     for yr, title, desc in events:
         st.markdown(f"""
@@ -656,20 +738,23 @@ elif tab == "▸ TEMPORAL":
         </div>
         """, unsafe_allow_html=True)
 
-# ───────────────────────────────────────────────────────────────
-# TAB 5: QUALITY
-# ───────────────────────────────────────────────────────────────
-elif tab == "▸ QUALITY":
+# ═══════════════════════════════════════════════════════════════
+# TAB 5: CALIDAD
+# ═══════════════════════════════════════════════════════════════
+elif tab == "▸ CALIDAD":
+    st.markdown('<div class="cyber-section-title">◈ ¿QUÉ TAN CONFIABLES SON LOS DATOS?</div>',
+                 unsafe_allow_html=True)
+
     if comp_data:
         tot = comp_data.get("total", 1)
         kpi_row([
-            (pctfmt(comp_data.get("species_ok",0), tot), "WITH SPECIES", CYBER_GREEN,
+            (pctfmt(comp_data.get("species_ok",0), tot), "CON ESPECIE", CYBER_GREEN,
              numfmt(comp_data.get("species_ok",0))),
-            (pctfmt(comp_data.get("class_ok",0), tot), "WITH CLASS", CYBER_AMBER,
+            (pctfmt(comp_data.get("class_ok",0), tot), "CON CLASE", CYBER_AMBER,
              numfmt(comp_data.get("class_ok",0))),
-            (pctfmt(comp_data.get("phylum_ok",0), tot), "WITH PHYLUM", CYBER_CYAN,
+            (pctfmt(comp_data.get("phylum_ok",0), tot), "CON PHYLUM", CYBER_CYAN,
              numfmt(comp_data.get("phylum_ok",0))),
-            ("40.3%", "MISSING CLASS", CYBER_RED, "8.3M unclassified"),
+            ("40.3%", "SIN CLASE", CYBER_RED, "8.3M sin clasificar"),
         ])
 
     cyber_divider()
@@ -679,52 +764,52 @@ elif tab == "▸ QUALITY":
         tot = comp_data.get("total", 1)
         fields = [
             ("PHYLUM", comp_data.get("phylum_ok", 0)),
-            ("CLASS", comp_data.get("class_ok", 0)),
-            ("ORDER", comp_data.get("order_ok", 0)),
-            ("FAMILY", comp_data.get("family_ok", 0)),
-            ("GENUS", comp_data.get("genus_ok", 0)),
-            ("SPECIES", comp_data.get("species_ok", 0)),
-            ("DATE", comp_data.get("date_ok", 0)),
+            ("CLASE", comp_data.get("class_ok", 0)),
+            ("ORDEN", comp_data.get("order_ok", 0)),
+            ("FAMILIA", comp_data.get("family_ok", 0)),
+            ("GÉNERO", comp_data.get("genus_ok", 0)),
+            ("ESPECIE", comp_data.get("species_ok", 0)),
+            ("FECHA", comp_data.get("date_ok", 0)),
         ]
-        df_c = pd.DataFrame(fields, columns=["FIELD", "COMPLETE"])
-        df_c["%"] = df_c["COMPLETE"] / tot * 100
-        df_c["MISSING%"] = 100 - df_c["%"]
+        df_c = pd.DataFrame(fields, columns=["CAMPO", "COMPLETO"])
+        df_c["%"] = df_c["COMPLETO"] / tot * 100
+        df_c["FALTANTE%"] = 100 - df_c["%"]
         fig = go.Figure()
-        fig.add_trace(go.Bar(y=df_c["FIELD"], x=df_c["%"], name="COMPLETE",
+        fig.add_trace(go.Bar(y=df_c["CAMPO"], x=df_c["%"], name="COMPLETO",
                               orientation="h", marker=dict(color=CYBER_GREEN, opacity=0.6)))
-        fig.add_trace(go.Bar(y=df_c["FIELD"], x=df_c["MISSING%"], name="MISSING",
+        fig.add_trace(go.Bar(y=df_c["CAMPO"], x=df_c["FALTANTE%"], name="FALTANTE",
                               orientation="h", marker=dict(color=CYBER_RED, opacity=0.4)))
-        fig.update_layout(title="TAXONOMIC FIELD COMPLETENESS", barmode="stack",
+        fig.update_layout(title="COMPLETITUD DE CAMPOS TAXONÓMICOS", barmode="stack",
                            bargap=0.3, xaxis_title="%", yaxis_title="",
                            showlegend=True, height=300)
         st.plotly_chart(fig, use_container_width=True)
 
-    warn("**40.3% of records lack Class assignment (8.3M).** These records are virtually "
-         "unusable for taxonomic analysis without additional processing.")
+    warn("**40.3% de los registros no tienen Clase asignada (8.3M).** "
+         "Estos registros son virtualmente inutilizables para análisis taxonómicos "
+         "sin procesamiento adicional.")
 
-    # Uncertainty
     if unc_data:
         unc_tot = unc_data.get("total", 1)
         sin = unc_data.get("sin_dato", 0)
-        st.markdown('<div class="cyber-section-title">◈ COORDINATE UNCERTAINTY</div>',
+        st.markdown('<div class="cyber-section-title">◈ INCERTIDUMBRE DE COORDENADAS</div>',
                      unsafe_allow_html=True)
         kpi_row([
-            (pctfmt(sin, unc_tot), "NO UNCERTAINTY DATA", CYBER_RED, f"{numfmt(sin)} records"),
-            (f"{unc_data.get('mediana_m',0):,.0f}m", "MEDIAN (WHEN REPORTED)", CYBER_AMBER),
-            (f"{unc_data.get('promedio_m',0):,.0f}m", "MEAN (WHEN REPORTED)", CYBER_CYAN),
-            ("7,945km", "MAX UNCERTAINTY", CYBER_MAGENTA, "FOSSIL_SPECIMEN"),
+            (pctfmt(sin, unc_tot), "SIN DATO DE PRECISIÓN", CYBER_RED, f"{numfmt(sin)} registros"),
+            (f"{unc_data.get('mediana_m',0):,.0f}m", "MEDIANA (CUANDO HAY)", CYBER_AMBER),
+            (f"{unc_data.get('promedio_m',0):,.0f}m", "PROMEDIO (CUANDO HAY)", CYBER_CYAN),
+            ("7,945km", "INCERTIDUMBRE MÁX.", CYBER_MAGENTA, "FOSSIL_SPECIMEN"),
         ])
 
-        cats = [("NO DATA", sin, CYBER_RED), ("<=10m", unc_data.get("hasta_10m",0), CYBER_GREEN),
+        cats = [("SIN DATO", sin, CYBER_RED), ("≤10m", unc_data.get("hasta_10m",0), CYBER_GREEN),
                 ("10-100m", unc_data.get("de_10_100m",0), CYBER_GREEN),
                 ("100m-1km", unc_data.get("de_100_1000m",0), CYBER_CYAN),
                 ("1-10km", unc_data.get("de_1_10km",0), CYBER_AMBER),
                 ("10-100km", unc_data.get("de_10_100km",0), CYBER_MAGENTA),
                 (">100km", unc_data.get("mas_100km",0), CYBER_RED)]
-        df_u = pd.DataFrame(cats, columns=["CATEGORY", "N", "COLOR"])
+        df_u = pd.DataFrame(cats, columns=["CATEGORÍA", "N", "COLOR"])
         df_u["%"] = df_u["N"] / unc_tot * 100
-        fig_u = px.bar(df_u, x="N", y="CATEGORY", orientation="h", text="%",
-                        title="UNCERTAINTY DISTRIBUTION", color="COLOR",
+        fig_u = px.bar(df_u, x="N", y="CATEGORÍA", orientation="h", text="%",
+                        title="DISTRIBUCIÓN DE INCERTIDUMBRE", color="COLOR",
                         color_discrete_map="identity")
         fig_u.update_traces(texttemplate="%{text:.1f}%", textposition="outside",
                              hovertemplate="%{y}: %{x:,.0f} (%{text:.1f}%)<extra></extra>")
@@ -732,19 +817,18 @@ elif tab == "▸ QUALITY":
                              xaxis_title="", yaxis_title="")
         st.plotly_chart(fig_u, use_container_width=True)
 
-    warn("**95% of records do NOT report coordinateUncertaintyInMeters.** "
-         "Without this field, it's impossible to assess geospatial precision. "
-         "Always filter or assume a default uncertainty for serious analysis.")
+    warn("**El 95% de los registros NO reportan coordinateUncertaintyInMeters.** "
+         "Sin este campo, es imposible evaluar la precisión geoespacial. "
+         "Para análisis serios, filtrá o asumí una incertidumbre por defecto.")
 
-    # Checklist
-    st.markdown('<div class="cyber-section-title">◈ DATA QUALITY CHECKLIST</div>',
+    st.markdown('<div class="cyber-section-title">◈ CHECKLIST DE CALIDAD</div>',
                  unsafe_allow_html=True)
     checks = [
-        ("01", CYBER_GREEN, "Filter occurrenceStatus = PRESENT", "Excludes 1.17M ABSENT records"),
-        ("02", CYBER_GREEN, "Exclude FOSSIL_SPECIMEN", "7,379 fossils with ~1,949km uncertainty"),
-        ("03", CYBER_GREEN, "Check coordinateUncertaintyInMeters", "95% of records missing this field"),
-        ("04", CYBER_AMBER, "Separate by basisOfRecord", "Human vs Machine vs Museum: different behaviors"),
-        ("05", CYBER_AMBER, "Verify taxonomic identification", "40.3% without Class assignment"),
+        ("01", CYBER_GREEN, "Filtrar occurrenceStatus = PRESENT", "Excluye 1.17M registros ABSENT"),
+        ("02", CYBER_GREEN, "Excluir FOSSIL_SPECIMEN", "7,379 fósiles con ~1,949km de incertidumbre"),
+        ("03", CYBER_GREEN, "Revisar coordinateUncertaintyInMeters", "95% de registros sin este dato"),
+        ("04", CYBER_AMBER, "Separar por basisOfRecord", "Comportamientos distintos según fuente"),
+        ("05", CYBER_AMBER, "Verificar identificación taxonómica", "40.3% sin Clase asignada"),
     ]
     for num, color, check, detail in checks:
         st.markdown(f"""
@@ -755,16 +839,19 @@ elif tab == "▸ QUALITY":
         </div>
         """, unsafe_allow_html=True)
 
-# ───────────────────────────────────────────────────────────────
-# TAB 6: BIASES
-# ───────────────────────────────────────────────────────────────
-elif tab == "▸ BIASES":
-    radar_dims = ["TAXONOMIC\n(Birds >> Insects)", "SPATIAL\n(Urban >> Rural)",
-                  "TEMPORAL\n(Post-2010)", "ACCESSIBILITY\n(Near Roads)",
-                  "DETECTABILITY\n(Large >> Small)", "PLATFORM\n(eBird/iNat Bias)",
-                  "QUALITY\n(95% No Precision)"]
+# ═══════════════════════════════════════════════════════════════
+# TAB 6: SESGOS
+# ═══════════════════════════════════════════════════════════════
+elif tab == "▸ SESGOS":
+    st.markdown('<div class="cyber-section-title">◈ LO QUE EL DATO NO TE DICE · RADAR DE SESGOS</div>',
+                 unsafe_allow_html=True)
+
+    radar_dims = ["TAXONÓMICO\n(Aves >> Insectos)", "ESPACIAL\n(Urbano >> Rural)",
+                  "TEMPORAL\n(Post-2010)", "ACCESIBILIDAD\n(Cerca de caminos)",
+                  "DETECTABILIDAD\n(Grandes >> Pequeños)", "PLATAFORMA\n(Sesgo eBird/iNat)",
+                  "CALIDAD\n(95% sin precisión)"]
     radar_vals = [9.0, 8.5, 7.0, 8.0, 7.5, 8.5, 9.0]
-    fig_r = chart_radar(radar_dims, radar_vals, "BIAS RADAR · 0=NO BIAS / 10=EXTREME BIAS")
+    fig_r = chart_radar(radar_dims, radar_vals, "RADAR DE SESGOS · 0=SIN SESGO / 10=SESGO EXTREMO")
     st.plotly_chart(fig_r, use_container_width=True)
 
     cyber_divider()
@@ -774,7 +861,7 @@ elif tab == "▸ BIASES":
         colors_b = {"HUMAN_OBSERVATION": CYBER_CYAN, "MACHINE_OBSERVATION": CYBER_AMBER,
                      "PRESERVED_SPECIMEN": CYBER_MAGENTA, "FOSSIL_SPECIMEN": CYBER_RED}
         df_b["c"] = df_b["basis"].map(colors_b).fillna(CYBER_DIM)
-        fig_b = chart_hbar(df_b, "n", "basis", "DATA SOURCE COMPARISON",
+        fig_b = chart_hbar(df_b, "n", "basis", "COMPARACIÓN DE FUENTES DE DATOS",
                            color_col="basis", colors=df_b["c"].tolist())
         st.plotly_chart(fig_b, use_container_width=True)
 
@@ -783,13 +870,13 @@ elif tab == "▸ BIASES":
         st.markdown(f"""
         <div class="cyber-radar-box" style="border-color:{CYBER_CYAN};">
             <div style="font-family:'Share Tech Mono',monospace; color:{CYBER_CYAN};
-                        font-size:0.8rem; margin-bottom:6px;">■ HUMAN OBSERVATION</div>
+                        font-size:0.8rem; margin-bottom:6px;">■ OBSERVACIÓN HUMANA</div>
             <div style="color:{CYBER_GRAY}; font-size:0.75rem;">
-                89.7% of data · Citizen science<br>
-                eBird + iNaturalist dominant<br>
-                Bias toward large/diurnal vertebrates<br>
-                Urban and coastal concentration<br>
-                Post-2010 data explosion
+                89.7% del dataset · Ciencia ciudadana<br>
+                Dominado por eBird e iNaturalist<br>
+                Sesgo hacia vertebrados grandes/diurnos<br>
+                Concentración urbana y costera<br>
+                Explosión de datos post-2010
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -797,33 +884,34 @@ elif tab == "▸ BIASES":
         st.markdown(f"""
         <div class="cyber-radar-box" style="border-color:{CYBER_MAGENTA};">
             <div style="font-family:'Share Tech Mono',monospace; color:{CYBER_MAGENTA};
-                        font-size:0.8rem; margin-bottom:6px;">■ PRESERVED SPECIMEN</div>
+                        font-size:0.8rem; margin-bottom:6px;">■ ESPÉCIMEN DE MUSEO</div>
             <div style="color:{CYBER_GRAY}; font-size:0.75rem;">
-                2.0% of data · Museum collections<br>
-                Better invertebrate coverage<br>
-                Rigorous taxonomic identification<br>
-                Historical distribution (wider)<br>
-                Less recent spatial bias
+                2.0% del dataset · Colecciones científicas<br>
+                Mejor cobertura de invertebrados<br>
+                Identificación taxonómica rigurosa<br>
+                Distribución histórica más amplia<br>
+                Menor sesgo espacial reciente
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown('<div class="cyber-section-title">◈ INTERPRETATION GUIDE</div>',
+    st.markdown('<div class="cyber-section-title">◈ GUÍA DE INTERPRETACIÓN</div>',
                  unsafe_allow_html=True)
 
     biases = [
-        (CYBER_CYAN, "PLATFORM BIAS",
-         "eBird accounts for >40% of human observations. The dataset is dominated by "
-         "birdwatchers, not representative biodiversity sampling."),
-        (CYBER_AMBER, "ACCESSIBILITY BIAS",
-         "Observations cluster near roads, cities, and tourist trails. Remote areas "
-         "(inner Patagonia, Altiplano, Andes) are severely under-sampled."),
-        (CYBER_MAGENTA, "DETECTABILITY BIAS",
-         "Large, diurnal, colorful, or loud animals are overrepresented. Small "
-         "invertebrates, nocturnal, and cryptic species are underrepresented."),
-        (CYBER_RED, "COMPLETENESS BIAS",
-         "95% don't report coordinate precision. 40.3% lack Class assignment. "
-         "1.17M are ABSENT records confused with presence."),
+        (CYBER_CYAN, "SESGO DE PLATAFORMA",
+         "eBird representa >40% de las observaciones humanas. El dataset está dominado "
+         "por observadores de aves, no por un muestreo representativo de la biodiversidad."),
+        (CYBER_AMBER, "SESGO DE ACCESIBILIDAD",
+         "Las observaciones se agrupan cerca de carreteras, ciudades y senderos turísticos. "
+         "Áreas remotas (Patagonia interior, Altiplano, cordillera) están subrepresentadas."),
+        (CYBER_MAGENTA, "SESGO DE DETECTABILIDAD",
+         "Animales grandes, diurnos, coloridos o ruidosos están sobrerrepresentados. "
+         "Invertebrados pequeños, especies nocturnas y crípticas están subrepresentados."),
+        (CYBER_RED, "SESGO DE COMPLETITUD",
+         "95% no reporta precisión de coordenadas. 40.3% no tiene Clase asignada. "
+         "1.17M son registros ABSENT que se confunden con presencia. "
+         "Sin filtrar, los mapas y estadísticas serán engañosos."),
     ]
     for color, title, txt in biases:
         st.markdown(f"""
@@ -839,7 +927,7 @@ elif tab == "▸ BIASES":
                 border:1px solid {CYBER_CYAN}; border-left:0; border-right:0;">
         <span style="font-family:'Share Tech Mono',monospace; color:{CYBER_WHITE};
                      font-size:1rem; letter-spacing:3px;">
-            "DATA WITHOUT CONTEXT IS A MAP THAT LIES"
+            "UN DATO SIN CONTEXTO ES UN MAPA QUE MIENTE"
         </span>
     </div>
     """, unsafe_allow_html=True)
@@ -847,6 +935,6 @@ elif tab == "▸ BIASES":
 # ── Footer ─────────────────────────────────────────────────────
 st.markdown(f"""
 <div class="cyber-footer">
-    ▸ GBIF.ORG · REGNUM ANIMALIA · CHILE (CL) · @CONMAPAS · {total:,.0f} RECORDS ◂
+    ▸ GBIF.ORG · REGNUM ANIMALIA · CHILE (CL) · @CONMAPAS · {total:,.0f} REGISTROS ◂
 </div>
 """, unsafe_allow_html=True)
