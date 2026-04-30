@@ -336,16 +336,16 @@ def chart_radar(dimensions, values, title):
 
 def chart_hexbin(df, title):
     """Hexbin density chart usando plotly (alternativa al heatmap)."""
-    fig = ff.create_hexbin_mapbox(
+    fig = ff.create_hexbin_map(
         data_frame=df, lat="lat", lon="lon",
-        nx=30, opacity=0.5,
+        nx_hexagon=30, opacity=0.5,
         labels={"color": "Obs"},
         color_continuous_scale=[
             [0.0, "#06060c"], [0.15, "#0a0030"], [0.3, "#0000aa"],
             [0.5, "#0044ff"], [0.65, "#00aaff"], [0.8, "#00e5ff"],
             [0.9, "#ff00e5"], [1.0, "#ff4088"],
         ],
-        mapbox_style="carto-darkmatter",
+        map_style="carto-darkmatter",
         zoom=4, center={"lat": -35.5, "lon": -71.5},
         height=550,
     )
@@ -536,13 +536,17 @@ if tab == "▸ RESUMEN":
 
     with col_map:
         if coords_df is not None and len(coords_df) > 0:
-            if "Plotly" in map_mode:
-                fig_hx = chart_hexbin(coords_df, "DENSIDAD HEXBIN · OBSERVACIONES HUMANAS")
-                st.plotly_chart(fig_hx, use_container_width=True)
-            else:
-                mode = "cluster" if "Clusters" in map_mode else "hexbin"
-                m = build_cluster_map(coords_df, mode=mode)
-                st_folium(m, height=500, width="100%")
+            try:
+                with st.spinner("Cargando mapa interactivo..."):
+                    if "Plotly" in map_mode:
+                        fig_hx = chart_hexbin(coords_df, "DENSIDAD HEXBIN · OBSERVACIONES HUMANAS")
+                        st.plotly_chart(fig_hx, use_container_width=True)
+                    else:
+                        mode = "cluster" if "Clusters" in map_mode else "hexbin"
+                        m = build_cluster_map(coords_df, mode=mode)
+                        st_folium(m, height=500, width="100%")
+            except Exception as e:
+                warn("Error al renderizar la capa geográfica.")
         else:
             st.warning("NO SE ENCONTRARON COORDENADAS DE MUESTRA")
 
@@ -647,13 +651,17 @@ elif tab == "▸ ESPACIAL":
             ["Hexbin Interactivo (Plotly)", "Clusters Neon (Folium)", "Densidad Holográfica (Folium)"],
             horizontal=True, label_visibility="collapsed",
         )
-        if "Plotly" in map_mode2:
-            fig_hx = chart_hexbin(coords_df, "DENSIDAD HEXBIN · OBSERVACIONES HUMANAS EN CHILE")
-            st.plotly_chart(fig_hx, use_container_width=True)
-        else:
-            mode = "cluster" if "Clusters" in map_mode2 else "hexbin"
-            m = build_cluster_map(coords_df, mode=mode)
-            st_folium(m, height=600, width="100%")
+        try:
+            with st.spinner("Cargando mapa interactivo..."):
+                if "Plotly" in map_mode2:
+                    fig_hx = chart_hexbin(coords_df, "DENSIDAD HEXBIN · OBSERVACIONES HUMANAS EN CHILE")
+                    st.plotly_chart(fig_hx, use_container_width=True)
+                else:
+                    mode = "cluster" if "Clusters" in map_mode2 else "hexbin"
+                    m = build_cluster_map(coords_df, mode=mode)
+                    st_folium(m, height=600, width="100%")
+        except Exception as e:
+            warn("Error al renderizar la capa geográfica.")
 
     info("Las observaciones humanas se concentran en zonas urbanas y costeras "
          "(Santiago, Valparaíso, Concepción). La Patagonia interior, el Altiplano "
