@@ -67,35 +67,6 @@ st.markdown(f"""
 
 .stApp {{
     background: radial-gradient(ellipse at top, #0a0a20 0%, {BG} 70%);
-    position: relative;
-}}
-
-.stApp::before {{
-    content: "";
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background:
-        linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none; z-index: 0;
-}}
-
-.stApp::after {{
-    content: "";
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,229,255,0.012) 2px,
-        rgba(0,229,255,0.012) 4px
-    );
-    pointer-events: none; z-index: 1;
-    animation: scanline 8s linear infinite;
-}}
-@keyframes scanline {{
-    0% {{ transform: translateY(0); }}
-    100% {{ transform: translateY(4px); }}
 }}
 
 .stApp header {{ background: transparent !important; }}
@@ -114,35 +85,13 @@ h1, h2, h3 {{
 }}
 
 .cyber-card {{
-    background: rgba(10, 10, 22, 0.45);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid {CYBER_DIM};
+    background: rgba(10, 10, 22, 0.85);
+    border: 1px solid rgba(0,229,255,0.12);
     border-radius: 4px;
     padding: 20px 24px;
     text-align: center;
-    position: relative;
     clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
     transition: border-color 0.3s, box-shadow 0.3s;
-    overflow: hidden;
-}}
-.cyber-card::after {{
-    content: "";
-    position: absolute; inset: 0;
-    border: 1px solid transparent;
-    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
-    pointer-events: none;
-    animation: pulse_glow 3s ease-in-out infinite;
-}}
-@keyframes pulse_glow {{
-    0%, 100% {{
-        border-color: rgba(0,229,255,0.05);
-        box-shadow: 0 0 8px rgba(0,229,255,0.03), inset 0 0 8px rgba(0,229,255,0.01);
-    }}
-    50% {{
-        border-color: rgba(0,229,255,0.15);
-        box-shadow: 0 0 16px rgba(0,229,255,0.08), inset 0 0 16px rgba(0,229,255,0.03);
-    }}
 }}
 .cyber-card:hover {{
     border-color: {CYBER_CYAN};
@@ -246,9 +195,7 @@ h1, h2, h3 {{
 }}
 
 .cyber-radar-box {{
-    background: rgba(10, 10, 22, 0.45);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 10, 22, 0.85);
     border: 1px solid {CYBER_DIM};
     padding: 12px 18px;
     margin: 8px 0;
@@ -262,14 +209,6 @@ h1, h2, h3 {{
 }}
 .cyber-title:hover {{
     animation: glitch 0.5s ease;
-}}
-
-.cyber-blink {{
-    animation: blink 2s infinite;
-}}
-@keyframes blink {{
-    0%, 100% {{ opacity: 1; }}
-    50% {{ opacity: 0.3; }}
 }}
 </style>
 """, unsafe_allow_html=True)
