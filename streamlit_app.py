@@ -8,7 +8,7 @@ import json
 import os
 import numpy as np
 import folium
-from folium.plugins import FastMarkerCluster, MarkerCluster
+from folium.plugins import MarkerCluster
 from streamlit_folium import st_folium
 import plotly.express as px
 import plotly.graph_objects as go
@@ -64,6 +64,7 @@ st.markdown(f"""
 
 .stApp {{
     background: radial-gradient(ellipse at top, #0a0a20 0%, {BG} 70%);
+    position: relative;
 }}
 
 .stApp::before {{
@@ -74,6 +75,24 @@ st.markdown(f"""
         linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none; z-index: 0;
+}}
+
+.stApp::after {{
+    content: "";
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,229,255,0.015) 2px,
+        rgba(0,229,255,0.015) 4px
+    );
+    pointer-events: none; z-index: 9999;
+    animation: scanline 8s linear infinite;
+}}
+@keyframes scanline {{
+    0% {{ transform: translateY(0); }}
+    100% {{ transform: translateY(4px); }}
 }}
 
 .stApp header {{ background: transparent !important; }}
@@ -92,7 +111,9 @@ h1, h2, h3 {{
 }}
 
 .cyber-card {{
-    background: {BG_CARD};
+    background: rgba(10, 10, 22, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid {CYBER_DIM};
     border-radius: 4px;
     padding: 20px 24px;
@@ -100,10 +121,29 @@ h1, h2, h3 {{
     position: relative;
     clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
     transition: border-color 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+}}
+.cyber-card::after {{
+    content: "";
+    position: absolute; inset: 0;
+    border: 1px solid transparent;
+    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+    pointer-events: none;
+    animation: pulse_glow 3s ease-in-out infinite;
+}}
+@keyframes pulse_glow {{
+    0%, 100% {{
+        border-color: rgba(0,229,255,0.05);
+        box-shadow: 0 0 8px rgba(0,229,255,0.03), inset 0 0 8px rgba(0,229,255,0.01);
+    }}
+    50% {{
+        border-color: rgba(0,229,255,0.15);
+        box-shadow: 0 0 16px rgba(0,229,255,0.08), inset 0 0 16px rgba(0,229,255,0.03);
+    }}
 }}
 .cyber-card:hover {{
     border-color: {CYBER_CYAN};
-    box-shadow: 0 0 15px rgba(0,229,255,0.15), inset 0 0 15px rgba(0,229,255,0.03);
+    box-shadow: 0 0 20px rgba(0,229,255,0.2), inset 0 0 20px rgba(0,229,255,0.05);
 }}
 
 .cyber-kpi-value {{
@@ -116,14 +156,14 @@ h1, h2, h3 {{
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    color: {CYBER_GRAY};
+    letter-spacing: 5px;
+    color: rgba(224, 224, 240, 0.6);
     margin-top: 6px;
 }}
 .cyber-kpi-sub {{
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.62rem;
-    color: {CYBER_DIM};
+    color: rgba(224, 224, 240, 0.35);
     margin-top: 4px;
 }}
 
@@ -203,7 +243,9 @@ h1, h2, h3 {{
 }}
 
 .cyber-radar-box {{
-    background: {BG_CARD};
+    background: rgba(10, 10, 22, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid {CYBER_DIM};
     padding: 12px 18px;
     margin: 8px 0;
@@ -338,7 +380,7 @@ def chart_hexbin(df, title):
     """Hexbin density chart usando plotly (alternativa al heatmap)."""
     fig = ff.create_hexbin_map(
         data_frame=df, lat="lat", lon="lon",
-        nx_hexagon=30, opacity=0.5,
+        nx_hexagon=30, opacity=0.5, min_count=1,
         labels={"color": "Obs"},
         color_continuous_scale=[
             [0.0, "#06060c"], [0.15, "#0a0030"], [0.3, "#0000aa"],
@@ -361,7 +403,6 @@ def build_cluster_map(df, mode="cluster"):
         location=[-35.5, -71.5], zoom_start=5,
         tiles=None, control_scale=True,
     )
-    # Base oscura
     folium.TileLayer(
         tiles="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
         attr='© OSM | CartoDB',
@@ -373,38 +414,15 @@ def build_cluster_map(df, mode="cluster"):
         return m
 
     if mode == "cluster":
-        # FastMarkerCluster con estilo cyberpunk
-        callback = """
-        function (row) {
-            var marker;
-            marker = L.circleMarker(new L.LatLng(row[0], row[1]), {
-                radius: 2.5,
-                fillColor: '#00e5ff',
-                color: '#00e5ff',
-                weight: 1,
-                opacity: 0.6,
-                fillOpacity: 0.5
-            });
-            return marker;
-        }
-        """
-        # Submuestrear para performance
         sample = df.sample(min(len(df), 8000)) if len(df) > 8000 else df
-        FastMarkerCluster(
-            data=sample[["lat", "lon"]].values.tolist(),
+        marker_cluster = MarkerCluster(
             name="CLUSTERS NEON",
-            callback=callback,
-            options={
-                "maxClusterRadius": 40,
-                "spiderfyOnMaxZoom": True,
-                "showCoverageOnHover": False,
-                "zoomToBoundsOnClick": True,
-                "iconCreateFunction": f"""
-                function(cluster) {{
+            icon_create_function="""
+                function(cluster) {
                     var count = cluster.getChildCount();
                     var size = count < 100 ? 30 : count < 500 ? 40 : count < 2000 ? 50 : 60;
                     var color = count < 100 ? '#00e5ff' : count < 500 ? '#00ff88' : count < 2000 ? '#ffaa00' : '#ff00e5';
-                    return L.divIcon({{
+                    return L.divIcon({
                         html: '<div style="background:' + color + '20; border:2px solid ' + color +
                               '; border-radius:50%; width:' + size + 'px; height:' + size +
                               'px; display:flex; align-items:center; justify-content:center;' +
@@ -412,11 +430,18 @@ def build_cluster_map(df, mode="cluster"):
                               '; text-shadow:0 0 8px ' + color + '; box-shadow:0 0 15px ' +
                               color + '40, inset 0 0 10px ' + color + '20;">' + count + '</div>',
                         className: '', iconSize: L.point(size, size)
-                    }});
-                }}
-                """
-            },
+                    });
+                }
+            """,
         ).add_to(m)
+        for _, row in sample.iterrows():
+            folium.CircleMarker(
+                location=[row["lat"], row["lon"]],
+                radius=2,
+                color="#00e5ff",
+                fill=True,
+                fill_opacity=0.6,
+            ).add_to(marker_cluster)
 
     elif mode == "hexbin":
         folium.plugins.HeatMap(
