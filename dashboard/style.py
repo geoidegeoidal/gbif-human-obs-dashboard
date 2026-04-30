@@ -4,7 +4,7 @@ Tema oscuro consistente con la paleta del carrusel @conmapas.
 """
 
 import streamlit as st
-from dashboard.config import BG, AMBER, CYAN, MAGENTA, GREEN, RED, WHITE, GRAY, GRAY_DIM
+from config import BG, AMBER, CYAN, MAGENTA, GREEN, RED, WHITE, GRAY, GRAY_DIM
 
 
 CSS = f"""

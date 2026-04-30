@@ -4,14 +4,14 @@ Incertidumbre, completitud taxonómica, ABSENT, checklist.
 """
 
 import streamlit as st
-from dashboard.data.loader import get_data
-from dashboard.data.queries import get_queries
-from dashboard.components.kpi_cards import render_kpi_row, num_fmt, pct_fmt
-from dashboard.components.graficos_plotly import (
+from data.loader import get_data
+from data.queries import get_queries
+from components.kpi_cards import render_kpi_row, num_fmt, pct_fmt
+from components.graficos_plotly import (
     bar_uncertainty, bar_completeness,
 )
-from dashboard.style import info_box, warning_box
-from dashboard.config import AMBER, CYAN, MAGENTA, GREEN, RED, GRAY, GRAY_DIM
+from style import info_box, warning_box
+from config import AMBER, CYAN, MAGENTA, GREEN, RED, GRAY, GRAY_DIM
 
 
 def show():

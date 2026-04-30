@@ -4,9 +4,9 @@ Entry point Streamlit.
 """
 
 import streamlit as st
-from dashboard.style import inject_css, footer
-from dashboard.config import DASHBOARD_TITLE, DASHBOARD_SUBTITLE, AMBER, GRAY, GRAY_DIM
-from dashboard.data.loader import has_precomputed
+from style import inject_css, footer
+from config import DASHBOARD_TITLE, DASHBOARD_SUBTITLE, AMBER, GRAY, GRAY_DIM
+from data.loader import has_precomputed
 
 st.set_page_config(
     page_title=DASHBOARD_TITLE,
@@ -63,22 +63,22 @@ st.markdown(
 
 # Route to selected tab
 if tab == "Resumen Ejecutivo":
-    from dashboard.pages import resumen as pg
+    from pages import resumen as pg
     pg.show()
 elif tab == "Taxonomía y Cobertura":
-    from dashboard.pages import taxonomia as pg
+    from pages import taxonomia as pg
     pg.show()
 elif tab == "Espacialidad":
-    from dashboard.pages import espacialidad as pg
+    from pages import espacialidad as pg
     pg.show()
 elif tab == "Temporalidad":
-    from dashboard.pages import temporalidad as pg
+    from pages import temporalidad as pg
     pg.show()
 elif tab == "Calidad de Datos":
-    from dashboard.pages import calidad as pg
+    from pages import calidad as pg
     pg.show()
 elif tab == "Sesgos y Limitaciones":
-    from dashboard.pages import sesgos as pg
+    from pages import sesgos as pg
     pg.show()
 
 footer()

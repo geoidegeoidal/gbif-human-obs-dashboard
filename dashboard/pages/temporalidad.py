@@ -5,12 +5,12 @@ Evolución anual, estacionalidad mensual, eventos de muestreo.
 
 import streamlit as st
 import pandas as pd
-from dashboard.data.loader import get_data
-from dashboard.data.queries import get_queries
-from dashboard.components.kpi_cards import render_kpi_row, num_fmt, pct_fmt
-from dashboard.components.graficos_plotly import area_timeline, bar_month
-from dashboard.style import info_box
-from dashboard.config import AMBER, CYAN, GREEN, RED, GRAY, GRAY_DIM
+from data.loader import get_data
+from data.queries import get_queries
+from components.kpi_cards import render_kpi_row, num_fmt, pct_fmt
+from components.graficos_plotly import area_timeline, bar_month
+from style import info_box
+from config import AMBER, CYAN, GREEN, RED, GRAY, GRAY_DIM
 
 
 def show():

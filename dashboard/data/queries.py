@@ -6,7 +6,7 @@ Usa el CSV original (11 GB) o el Parquet intermedio según disponibilidad.
 import duckdb
 import os
 import pandas as pd
-from dashboard.config import CSV_PATH, PQ_PATH, GEOPQ_DIR, PRECOMPUTE_DIR
+from config import CSV_PATH, PQ_PATH, GEOPQ_DIR, PRECOMPUTE_DIR
 
 
 class Queries:

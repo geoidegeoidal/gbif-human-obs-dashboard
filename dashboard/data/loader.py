@@ -6,7 +6,7 @@ Prioriza datos precomputados (JSON/Parquet), con fallback a DuckDB queries.
 import json
 import os
 import pandas as pd
-from dashboard.config import PRECOMPUTE_DIR
+from config import PRECOMPUTE_DIR
 
 
 def load_json(name):

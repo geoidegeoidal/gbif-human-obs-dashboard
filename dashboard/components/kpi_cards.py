@@ -3,7 +3,7 @@ Componentes reutilizables: tarjetas KPI.
 """
 
 import streamlit as st
-from dashboard.config import AMBER, CYAN, MAGENTA, GREEN, RED, WHITE, GRAY, GRAY_DIM
+from config import AMBER, CYAN, MAGENTA, GREEN, RED, WHITE, GRAY, GRAY_DIM
 
 
 def render_kpi_row(kpis):

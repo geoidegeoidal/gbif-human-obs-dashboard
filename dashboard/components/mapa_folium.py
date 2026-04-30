@@ -9,7 +9,7 @@ from streamlit_folium import st_folium
 import streamlit as st
 import pandas as pd
 import numpy as np
-from dashboard.config import BG, CYAN, AMBER, RED, GRAY
+from config import BG, CYAN, AMBER, RED, GRAY
 
 
 def create_base_map(center_lat=-35, center_lon=-71, zoom=5):

@@ -5,15 +5,15 @@ KPIs principales + mapa overview + top phyla.
 
 import streamlit as st
 import pandas as pd
-from dashboard.data.loader import get_data, has_precomputed
-from dashboard.data.queries import get_queries
-from dashboard.components.kpi_cards import render_kpi_row, num_fmt, pct_fmt
-from dashboard.components.graficos_plotly import (
+from data.loader import get_data, has_precomputed
+from data.queries import get_queries
+from components.kpi_cards import render_kpi_row, num_fmt, pct_fmt
+from components.graficos_plotly import (
     bar_basis, area_timeline,
 )
-from dashboard.components.mapa_folium import map_from_coords
-from dashboard.style import info_box
-from dashboard.config import AMBER, CYAN, MAGENTA, GREEN, RED, GRAY, GRAY_DIM
+from components.mapa_folium import map_from_coords
+from style import info_box
+from config import AMBER, CYAN, MAGENTA, GREEN, RED, GRAY, GRAY_DIM
 
 
 def show():

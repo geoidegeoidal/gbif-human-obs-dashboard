@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import plotly.io as pio
 import pandas as pd
 import numpy as np
-from dashboard.config import (
+from config import (
     BG, AMBER, CYAN, MAGENTA, GREEN, RED, WHITE, GRAY, GRAY_DIM,
     COLOR_PHYLUM, COLOR_BASIS, PLOTLY_COLOR_DISCRETE,
 )

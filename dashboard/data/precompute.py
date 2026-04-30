@@ -9,7 +9,7 @@ import json
 import os
 import time
 import numpy as np
-from dashboard.config import CSV_PATH, PQ_PATH, PRECOMPUTE_DIR
+from config import CSV_PATH, PQ_PATH, PRECOMPUTE_DIR
 
 
 def precompute_all():
