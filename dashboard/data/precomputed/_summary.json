@@ -1,0 +1,1 @@
+{"kpi": {"total": 20801113, "human_obs": 18662018, "with_coords": 20636696, "absent": 1170113, "fossil": 7379}, "kpi_time": 10.7, "phylum_time": 17.7, "class_time": 16.8, "species_time": 8.4, "aves_time": 8.2, "year_time": 17.3, "month_time": 8.7, "basis_time": 9.0, "unc_time": 8.7, "comp_time": 8.6, "prov_time": 8.6, "sample_time": 8.7, "status": "ok"}

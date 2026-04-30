@@ -1,0 +1,1314 @@
+{
+  "occurrenceStatus": [
+    {
+      "status": "PRESENT",
+      "n": 19631000
+    },
+    {
+      "status": "ABSENT",
+      "n": 1170113
+    }
+  ],
+  "occurrenceStatus_time": 8.3,
+  "coord_uncertainty": {
+    "total": 20801113.0,
+    "sin_incertidumbre": 19758546.0,
+    "hasta_10m": 94579.0,
+    "10_100m": 104326.0,
+    "100_1000m": 694766.0,
+    "1_10km": 115260.0,
+    "10_100km": 27561.0,
+    "mas_100km": 6075.0,
+    "promedio_m": 6512.4,
+    "mediana_m": 1000.0,
+    "min_m": 0.11,
+    "max_m": 7944845.27
+  },
+  "coord_uncertainty_time": 7.3,
+  "fossil_taxonomy": [
+    {
+      "phylum": "Mollusca",
+      "class": "Gastropoda",
+      "n": 2513
+    },
+    {
+      "phylum": "Mollusca",
+      "class": "Bivalvia",
+      "n": 2248
+    },
+    {
+      "phylum": "Chordata",
+      "class": "Mammalia",
+      "n": 1175
+    },
+    {
+      "phylum": "Brachiopoda",
+      "class": "Rhynchonellata",
+      "n": 318
+    },
+    {
+      "phylum": "Arthropoda",
+      "class": "Maxillopoda",
+      "n": 192
+    },
+    {
+      "phylum": "Mollusca",
+      "class": "Cephalopoda",
+      "n": 167
+    },
+    {
+      "phylum": "Echinodermata",
+      "class": "Echinoidea",
+      "n": 136
+    },
+    {
+      "phylum": "Chordata",
+      "class": "Aves",
+      "n": 89
+    },
+    {
+      "phylum": "Chordata",
+      "class": "nan",
+      "n": 86
+    },
+    {
+      "phylum": "nan",
+      "class": "nan",
+      "n": 69
+    },
+    {
+      "phylum": "Mollusca",
+      "class": "Scaphopoda",
+      "n": 67
+    },
+    {
+      "phylum": "Arthropoda",
+      "class": "Ostracoda",
+      "n": 58
+    },
+    {
+      "phylum": "Arthropoda",
+      "class": "Malacostraca",
+      "n": 41
+    },
+    {
+      "phylum": "Mollusca",
+      "class": "nan",
+      "n": 38
+    },
+    {
+      "phylum": "Cnidaria",
+      "class": "Anthozoa",
+      "n": 37
+    },
+    {
+      "phylum": "Bryozoa",
+      "class": "nan",
+      "n": 34
+    },
+    {
+      "phylum": "Chordata",
+      "class": "Elasmobranchii",
+      "n": 23
+    },
+    {
+      "phylum": "Brachiopoda",
+      "class": "Lingulata",
+      "n": 20
+    },
+    {
+      "phylum": "Bryozoa",
+      "class": "Gymnolaemata",
+      "n": 10
+    },
+    {
+      "phylum": "Annelida",
+      "class": "Polychaeta",
+      "n": 8
+    }
+  ],
+  "fossil_geo": {
+    "n": 7379.0,
+    "lat_min": -59.758166,
+    "lat_max": -9.0,
+    "lon_min": -107.6,
+    "lon_max": -3.75,
+    "year_min": 1872.0,
+    "year_max": 2017.0
+  },
+  "fossil_time": 14.4,
+  "human_obs_class": [
+    {
+      "class": "Aves",
+      "n": 7701624
+    },
+    {
+      "class": "nan",
+      "n": 7443836
+    },
+    {
+      "class": "Malacostraca",
+      "n": 2639698
+    },
+    {
+      "class": "Elasmobranchii",
+      "n": 242818
+    },
+    {
+      "class": "Cephalopoda",
+      "n": 171621
+    },
+    {
+      "class": "Mammalia",
+      "n": 75429
+    },
+    {
+      "class": "Insecta",
+      "n": 66624
+    },
+    {
+      "class": "Gastropoda",
+      "n": 64482
+    },
+    {
+      "class": "Echinoidea",
+      "n": 30539
+    },
+    {
+      "class": "Anthozoa",
+      "n": 28810
+    },
+    {
+      "class": "Asteroidea",
+      "n": 22357
+    },
+    {
+      "class": "Holocephali",
+      "n": 19562
+    },
+    {
+      "class": "Squamata",
+      "n": 17904
+    },
+    {
+      "class": "Polychaeta",
+      "n": 16189
+    },
+    {
+      "class": "Copepoda",
+      "n": 15080
+    }
+  ],
+  "human_obs_time": 7.3,
+  "basis_phylum": [
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Mollusca",
+      "n": 5036
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Chordata",
+      "n": 1375
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Brachiopoda",
+      "n": 347
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Arthropoda",
+      "n": 304
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Echinodermata",
+      "n": 150
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "nan",
+      "n": 69
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Bryozoa",
+      "n": 50
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Cnidaria",
+      "n": 39
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "phylum": "Annelida",
+      "n": 9
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Chordata",
+      "n": 15492085
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Arthropoda",
+      "n": 2751400
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Mollusca",
+      "n": 253103
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Echinodermata",
+      "n": 57553
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Cnidaria",
+      "n": 51061
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Annelida",
+      "n": 17367
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Porifera",
+      "n": 12336
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Bryozoa",
+      "n": 8179
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Chaetognatha",
+      "n": 6760
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "nan",
+      "n": 6077
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Ctenophora",
+      "n": 3783
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Nematoda",
+      "n": 584
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Brachiopoda",
+      "n": 575
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Rotifera",
+      "n": 549
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Nemertea",
+      "n": 279
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Platyhelminthes",
+      "n": 258
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Priapulida",
+      "n": 26
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Nematomorpha",
+      "n": 16
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Onychophora",
+      "n": 9
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Sipuncula",
+      "n": 8
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Tardigrada",
+      "n": 5
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Hemichordata",
+      "n": 4
+    },
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "phylum": "Gastrotricha",
+      "n": 1
+    },
+    {
+      "basis": "LIVING_SPECIMEN",
+      "phylum": "Chordata",
+      "n": 1646
+    },
+    {
+      "basis": "LIVING_SPECIMEN",
+      "phylum": "Annelida",
+      "n": 735
+    },
+    {
+      "basis": "LIVING_SPECIMEN",
+      "phylum": "Rotifera",
+      "n": 81
+    },
+    {
+      "basis": "LIVING_SPECIMEN",
+      "phylum": "Arthropoda",
+      "n": 15
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Chordata",
+      "n": 1581213
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Echinodermata",
+      "n": 17485
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Mollusca",
+      "n": 8900
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Cnidaria",
+      "n": 4679
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Porifera",
+      "n": 3114
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Arthropoda",
+      "n": 2619
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "nan",
+      "n": 330
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Annelida",
+      "n": 211
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Bryozoa",
+      "n": 96
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Chaetognatha",
+      "n": 26
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Brachiopoda",
+      "n": 20
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "phylum": "Ctenophora",
+      "n": 2
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Arthropoda",
+      "n": 6834
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Mollusca",
+      "n": 5700
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Annelida",
+      "n": 1774
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Chordata",
+      "n": 1458
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Echinodermata",
+      "n": 809
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Brachiopoda",
+      "n": 509
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Cnidaria",
+      "n": 276
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Porifera",
+      "n": 168
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Bryozoa",
+      "n": 86
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Nematoda",
+      "n": 51
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Nemertea",
+      "n": 23
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Sipuncula",
+      "n": 22
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Platyhelminthes",
+      "n": 21
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Priapulida",
+      "n": 16
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Kinorhyncha",
+      "n": 15
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "nan",
+      "n": 13
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Loricifera",
+      "n": 7
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Hemichordata",
+      "n": 7
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Gastrotricha",
+      "n": 6
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Tardigrada",
+      "n": 4
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "phylum": "Ctenophora",
+      "n": 3
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Arthropoda",
+      "n": 37973
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Chordata",
+      "n": 6324
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Annelida",
+      "n": 5823
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Mollusca",
+      "n": 3243
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Platyhelminthes",
+      "n": 928
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Nematoda",
+      "n": 680
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Echinodermata",
+      "n": 428
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Cnidaria",
+      "n": 324
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Nemertea",
+      "n": 264
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "nan",
+      "n": 214
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Rotifera",
+      "n": 188
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Tardigrada",
+      "n": 74
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Xenacoelomorpha",
+      "n": 34
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Acanthocephala",
+      "n": 23
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Sipuncula",
+      "n": 19
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Priapulida",
+      "n": 19
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Brachiopoda",
+      "n": 7
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "phylum": "Bryozoa",
+      "n": 4
+    },
+    {
+      "basis": "OBSERVATION",
+      "phylum": "Chordata",
+      "n": 141
+    },
+    {
+      "basis": "OBSERVATION",
+      "phylum": "Mollusca",
+      "n": 33
+    },
+    {
+      "basis": "OBSERVATION",
+      "phylum": "Arthropoda",
+      "n": 18
+    },
+    {
+      "basis": "OBSERVATION",
+      "phylum": "nan",
+      "n": 6
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Chordata",
+      "n": 5329
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Arthropoda",
+      "n": 2212
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Mollusca",
+      "n": 1318
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Cnidaria",
+      "n": 1087
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Porifera",
+      "n": 541
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Nematoda",
+      "n": 387
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Bryozoa",
+      "n": 248
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Brachiopoda",
+      "n": 91
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Annelida",
+      "n": 67
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Echinodermata",
+      "n": 43
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Sipuncula",
+      "n": 19
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Platyhelminthes",
+      "n": 4
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Gastrotricha",
+      "n": 4
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Kinorhyncha",
+      "n": 4
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Nemertea",
+      "n": 3
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Hemichordata",
+      "n": 1
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "nan",
+      "n": 1
+    },
+    {
+      "basis": "OCCURRENCE",
+      "phylum": "Tardigrada",
+      "n": 1
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Arthropoda",
+      "n": 276626
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Chordata",
+      "n": 95900
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Mollusca",
+      "n": 32041
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Echinodermata",
+      "n": 6566
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Annelida",
+      "n": 4244
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Cnidaria",
+      "n": 3298
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Nemertea",
+      "n": 1382
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Porifera",
+      "n": 1037
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Tardigrada",
+      "n": 774
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Platyhelminthes",
+      "n": 698
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Nematoda",
+      "n": 560
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "nan",
+      "n": 543
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Bryozoa",
+      "n": 340
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Brachiopoda",
+      "n": 238
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Sipuncula",
+      "n": 123
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Ctenophora",
+      "n": 43
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Xenacoelomorpha",
+      "n": 40
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Onychophora",
+      "n": 30
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Kinorhyncha",
+      "n": 28
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Hemichordata",
+      "n": 25
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Acanthocephala",
+      "n": 25
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Chaetognatha",
+      "n": 13
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Priapulida",
+      "n": 12
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Entoprocta",
+      "n": 12
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Loricifera",
+      "n": 10
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Nematomorpha",
+      "n": 5
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Phoronida",
+      "n": 1
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "phylum": "Rotifera",
+      "n": 1
+    }
+  ],
+  "basis_phylum_time": 7.5,
+  "key_classes_by_basis": [
+    {
+      "class": "Amphibia",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 9904
+    },
+    {
+      "class": "Amphibia",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 4860
+    },
+    {
+      "class": "Amphibia",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 363
+    },
+    {
+      "class": "Amphibia",
+      "basis": "MATERIAL_CITATION",
+      "n": 24
+    },
+    {
+      "class": "Amphibia",
+      "basis": "OCCURRENCE",
+      "n": 20
+    },
+    {
+      "class": "Amphibia",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 15
+    },
+    {
+      "class": "Arachnida",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 10683
+    },
+    {
+      "class": "Arachnida",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 7428
+    },
+    {
+      "class": "Arachnida",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 1800
+    },
+    {
+      "class": "Arachnida",
+      "basis": "MATERIAL_CITATION",
+      "n": 986
+    },
+    {
+      "class": "Arachnida",
+      "basis": "OCCURRENCE",
+      "n": 10
+    },
+    {
+      "class": "Aves",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 7701624
+    },
+    {
+      "class": "Aves",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 127199
+    },
+    {
+      "class": "Aves",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 34032
+    },
+    {
+      "class": "Aves",
+      "basis": "MATERIAL_CITATION",
+      "n": 354
+    },
+    {
+      "class": "Aves",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 265
+    },
+    {
+      "class": "Aves",
+      "basis": "OBSERVATION",
+      "n": 141
+    },
+    {
+      "class": "Aves",
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 89
+    },
+    {
+      "class": "Aves",
+      "basis": "OCCURRENCE",
+      "n": 12
+    },
+    {
+      "class": "Elasmobranchii",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 242818
+    },
+    {
+      "class": "Elasmobranchii",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 1246
+    },
+    {
+      "class": "Elasmobranchii",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 321
+    },
+    {
+      "class": "Elasmobranchii",
+      "basis": "MATERIAL_CITATION",
+      "n": 64
+    },
+    {
+      "class": "Elasmobranchii",
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 23
+    },
+    {
+      "class": "Elasmobranchii",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 12
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 64482
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 21751
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 3477
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 2513
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 1646
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "MATERIAL_CITATION",
+      "n": 1550
+    },
+    {
+      "class": "Gastropoda",
+      "basis": "OCCURRENCE",
+      "n": 736
+    },
+    {
+      "class": "Insecta",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 249197
+    },
+    {
+      "class": "Insecta",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 66624
+    },
+    {
+      "class": "Insecta",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 31499
+    },
+    {
+      "class": "Insecta",
+      "basis": "MATERIAL_CITATION",
+      "n": 4609
+    },
+    {
+      "class": "Insecta",
+      "basis": "OCCURRENCE",
+      "n": 609
+    },
+    {
+      "class": "Insecta",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 115
+    },
+    {
+      "class": "Insecta",
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 8
+    },
+    {
+      "class": "Insecta",
+      "basis": "LIVING_SPECIMEN",
+      "n": 1
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 2639698
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 10688
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 3334
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 2087
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "MATERIAL_CITATION",
+      "n": 1007
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "OCCURRENCE",
+      "n": 272
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 41
+    },
+    {
+      "class": "Malacostraca",
+      "basis": "OBSERVATION",
+      "n": 18
+    },
+    {
+      "class": "Mammalia",
+      "basis": "MACHINE_OBSERVATION",
+      "n": 535284
+    },
+    {
+      "class": "Mammalia",
+      "basis": "HUMAN_OBSERVATION",
+      "n": 75429
+    },
+    {
+      "class": "Mammalia",
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 22607
+    },
+    {
+      "class": "Mammalia",
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 1175
+    },
+    {
+      "class": "Mammalia",
+      "basis": "MATERIAL_CITATION",
+      "n": 633
+    },
+    {
+      "class": "Mammalia",
+      "basis": "LIVING_SPECIMEN",
+      "n": 187
+    },
+    {
+      "class": "Mammalia",
+      "basis": "MATERIAL_SAMPLE",
+      "n": 84
+    },
+    {
+      "class": "Mammalia",
+      "basis": "OCCURRENCE",
+      "n": 60
+    }
+  ],
+  "key_classes_time": 7.4,
+  "high_uncertainty_by_basis": [
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "n": 24375,
+      "avg_m": 51299.0
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 8873,
+      "avg_m": 441149.0
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 248,
+      "avg_m": 1948881.0
+    },
+    {
+      "basis": "OCCURRENCE",
+      "n": 119,
+      "avg_m": 262889.0
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "n": 14,
+      "avg_m": 111319.0
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "n": 7,
+      "avg_m": 152824.0
+    }
+  ],
+  "high_uncertainty_time": 7.4,
+  "minor_phyla": [
+    {
+      "phylum": "Mollusca",
+      "n": 309374
+    },
+    {
+      "phylum": "Echinodermata",
+      "n": 83034
+    },
+    {
+      "phylum": "Cnidaria",
+      "n": 60764
+    },
+    {
+      "phylum": "Annelida",
+      "n": 30230
+    },
+    {
+      "phylum": "Porifera",
+      "n": 17196
+    },
+    {
+      "phylum": "Bryozoa",
+      "n": 9003
+    },
+    {
+      "phylum": "Chaetognatha",
+      "n": 6799
+    },
+    {
+      "phylum": "Ctenophora",
+      "n": 3831
+    },
+    {
+      "phylum": "Nematoda",
+      "n": 2262
+    },
+    {
+      "phylum": "Nemertea",
+      "n": 1951
+    },
+    {
+      "phylum": "Platyhelminthes",
+      "n": 1909
+    },
+    {
+      "phylum": "Brachiopoda",
+      "n": 1787
+    },
+    {
+      "phylum": "Tardigrada",
+      "n": 858
+    },
+    {
+      "phylum": "Rotifera",
+      "n": 819
+    },
+    {
+      "phylum": "Sipuncula",
+      "n": 191
+    },
+    {
+      "phylum": "Xenacoelomorpha",
+      "n": 74
+    },
+    {
+      "phylum": "Priapulida",
+      "n": 73
+    },
+    {
+      "phylum": "Acanthocephala",
+      "n": 48
+    },
+    {
+      "phylum": "Kinorhyncha",
+      "n": 47
+    },
+    {
+      "phylum": "Onychophora",
+      "n": 39
+    },
+    {
+      "phylum": "Hemichordata",
+      "n": 37
+    },
+    {
+      "phylum": "Nematomorpha",
+      "n": 21
+    },
+    {
+      "phylum": "Loricifera",
+      "n": 17
+    },
+    {
+      "phylum": "Entoprocta",
+      "n": 12
+    },
+    {
+      "phylum": "Gastrotricha",
+      "n": 11
+    },
+    {
+      "phylum": "Phoronida",
+      "n": 1
+    }
+  ],
+  "minor_phyla_time": 7.3
+}

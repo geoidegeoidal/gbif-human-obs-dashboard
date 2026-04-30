@@ -1,0 +1,735 @@
+{
+  "total_rows": 20801113,
+  "count_time_s": 7.6,
+  "geo": {
+    "with_coords": 20636696.0,
+    "without_coords": 164417.0,
+    "lat_min": -74.866667,
+    "lat_max": 74.25,
+    "lon_min": -170.75,
+    "lon_max": 163.398,
+    "year_min": 1635.0,
+    "year_max": 2026.0
+  },
+  "geo_time_s": 8.7,
+  "phylum_top15": [
+    {
+      "phylum": "Chordata",
+      "n": 17185471
+    },
+    {
+      "phylum": "Arthropoda",
+      "n": 3078001
+    },
+    {
+      "phylum": "Mollusca",
+      "n": 309374
+    },
+    {
+      "phylum": "Echinodermata",
+      "n": 83034
+    },
+    {
+      "phylum": "Cnidaria",
+      "n": 60764
+    },
+    {
+      "phylum": "Annelida",
+      "n": 30230
+    },
+    {
+      "phylum": "Porifera",
+      "n": 17196
+    },
+    {
+      "phylum": "Bryozoa",
+      "n": 9003
+    },
+    {
+      "phylum": "nan",
+      "n": 7253
+    },
+    {
+      "phylum": "Chaetognatha",
+      "n": 6799
+    },
+    {
+      "phylum": "Ctenophora",
+      "n": 3831
+    },
+    {
+      "phylum": "Nematoda",
+      "n": 2262
+    },
+    {
+      "phylum": "Nemertea",
+      "n": 1951
+    },
+    {
+      "phylum": "Platyhelminthes",
+      "n": 1909
+    },
+    {
+      "phylum": "Brachiopoda",
+      "n": 1787
+    }
+  ],
+  "phylum_time_s": 7.7,
+  "class_top15": [
+    {
+      "class": "nan",
+      "n": 8388491
+    },
+    {
+      "class": "Aves",
+      "n": 7863716
+    },
+    {
+      "class": "Malacostraca",
+      "n": 2657145
+    },
+    {
+      "class": "Mammalia",
+      "n": 635459
+    },
+    {
+      "class": "Insecta",
+      "n": 352662
+    },
+    {
+      "class": "Elasmobranchii",
+      "n": 244484
+    },
+    {
+      "class": "Cephalopoda",
+      "n": 176297
+    },
+    {
+      "class": "Gastropoda",
+      "n": 96155
+    },
+    {
+      "class": "Echinoidea",
+      "n": 45930
+    },
+    {
+      "class": "Squamata",
+      "n": 35434
+    },
+    {
+      "class": "Anthozoa",
+      "n": 34776
+    },
+    {
+      "class": "Polychaeta",
+      "n": 28445
+    },
+    {
+      "class": "Asteroidea",
+      "n": 27263
+    },
+    {
+      "class": "Bivalvia",
+      "n": 25468
+    },
+    {
+      "class": "Arachnida",
+      "n": 20907
+    }
+  ],
+  "class_time_s": 8.4,
+  "basisOfRecord": [
+    {
+      "basis": "HUMAN_OBSERVATION",
+      "n": 18662018
+    },
+    {
+      "basis": "MACHINE_OBSERVATION",
+      "n": 1618695
+    },
+    {
+      "basis": "PRESERVED_SPECIMEN",
+      "n": 424615
+    },
+    {
+      "basis": "MATERIAL_SAMPLE",
+      "n": 56569
+    },
+    {
+      "basis": "MATERIAL_CITATION",
+      "n": 17802
+    },
+    {
+      "basis": "OCCURRENCE",
+      "n": 11360
+    },
+    {
+      "basis": "FOSSIL_SPECIMEN",
+      "n": 7379
+    },
+    {
+      "basis": "LIVING_SPECIMEN",
+      "n": 2477
+    },
+    {
+      "basis": "OBSERVATION",
+      "n": 198
+    }
+  ],
+  "basis_time_s": 9.7,
+  "province_top20": [
+    {
+      "province": "nan",
+      "n": 7541974
+    },
+    {
+      "province": "Valparaíso",
+      "n": 1532138
+    },
+    {
+      "province": "Región Metropolitana de Santiago",
+      "n": 1376383
+    },
+    {
+      "province": "Los Lagos",
+      "n": 1187554
+    },
+    {
+      "province": "Magallanes",
+      "n": 718940
+    },
+    {
+      "province": "Región de Tarapacá",
+      "n": 671981
+    },
+    {
+      "province": "Coquimbo",
+      "n": 548430
+    },
+    {
+      "province": "Región del Bíobío",
+      "n": 437516
+    },
+    {
+      "province": "4",
+      "n": 428980
+    },
+    {
+      "province": "Arica y Parinacota",
+      "n": 412628
+    },
+    {
+      "province": "Región Arica y Parinacota",
+      "n": 378342
+    },
+    {
+      "province": "5",
+      "n": 373433
+    },
+    {
+      "province": "Los Ríos",
+      "n": 340897
+    },
+    {
+      "province": "Bío-Bío",
+      "n": 332705
+    },
+    {
+      "province": "Maule",
+      "n": 304795
+    },
+    {
+      "province": "Araucanía",
+      "n": 291693
+    },
+    {
+      "province": "7",
+      "n": 275081
+    },
+    {
+      "province": "Libertador General Bernardo O'Higgins",
+      "n": 232187
+    },
+    {
+      "province": "Región de Antofagasta",
+      "n": 222172
+    },
+    {
+      "province": "8",
+      "n": 215274
+    }
+  ],
+  "province_time_s": 8.8,
+  "year_dist": [
+    {
+      "year": 1970,
+      "n": 4856
+    },
+    {
+      "year": 1971,
+      "n": 3639
+    },
+    {
+      "year": 1972,
+      "n": 5088
+    },
+    {
+      "year": 1973,
+      "n": 1310
+    },
+    {
+      "year": 1974,
+      "n": 2200
+    },
+    {
+      "year": 1975,
+      "n": 4455
+    },
+    {
+      "year": 1976,
+      "n": 3884
+    },
+    {
+      "year": 1977,
+      "n": 4273
+    },
+    {
+      "year": 1978,
+      "n": 3494
+    },
+    {
+      "year": 1979,
+      "n": 3438
+    },
+    {
+      "year": 1980,
+      "n": 5469
+    },
+    {
+      "year": 1981,
+      "n": 4609
+    },
+    {
+      "year": 1982,
+      "n": 7049
+    },
+    {
+      "year": 1983,
+      "n": 4433
+    },
+    {
+      "year": 1984,
+      "n": 4456
+    },
+    {
+      "year": 1985,
+      "n": 8795
+    },
+    {
+      "year": 1986,
+      "n": 6236
+    },
+    {
+      "year": 1987,
+      "n": 3580
+    },
+    {
+      "year": 1988,
+      "n": 3737
+    },
+    {
+      "year": 1989,
+      "n": 5270
+    },
+    {
+      "year": 1990,
+      "n": 5718
+    },
+    {
+      "year": 1991,
+      "n": 5534
+    },
+    {
+      "year": 1992,
+      "n": 4648
+    },
+    {
+      "year": 1993,
+      "n": 4154
+    },
+    {
+      "year": 1994,
+      "n": 6341
+    },
+    {
+      "year": 1995,
+      "n": 11753
+    },
+    {
+      "year": 1996,
+      "n": 6890
+    },
+    {
+      "year": 1997,
+      "n": 25805
+    },
+    {
+      "year": 1998,
+      "n": 12671
+    },
+    {
+      "year": 1999,
+      "n": 93759
+    },
+    {
+      "year": 2000,
+      "n": 73693
+    },
+    {
+      "year": 2001,
+      "n": 101575
+    },
+    {
+      "year": 2002,
+      "n": 110348
+    },
+    {
+      "year": 2003,
+      "n": 91056
+    },
+    {
+      "year": 2004,
+      "n": 225723
+    },
+    {
+      "year": 2005,
+      "n": 610979
+    },
+    {
+      "year": 2006,
+      "n": 403171
+    },
+    {
+      "year": 2007,
+      "n": 279558
+    },
+    {
+      "year": 2008,
+      "n": 290319
+    },
+    {
+      "year": 2009,
+      "n": 285413
+    },
+    {
+      "year": 2010,
+      "n": 801414
+    },
+    {
+      "year": 2011,
+      "n": 952884
+    },
+    {
+      "year": 2012,
+      "n": 1007913
+    },
+    {
+      "year": 2013,
+      "n": 850942
+    },
+    {
+      "year": 2014,
+      "n": 786001
+    },
+    {
+      "year": 2015,
+      "n": 776678
+    },
+    {
+      "year": 2016,
+      "n": 848616
+    },
+    {
+      "year": 2017,
+      "n": 1001445
+    },
+    {
+      "year": 2018,
+      "n": 1151401
+    },
+    {
+      "year": 2019,
+      "n": 1387187
+    },
+    {
+      "year": 2020,
+      "n": 1197829
+    },
+    {
+      "year": 2021,
+      "n": 1601939
+    },
+    {
+      "year": 2022,
+      "n": 1856926
+    },
+    {
+      "year": 2023,
+      "n": 1542926
+    },
+    {
+      "year": 2024,
+      "n": 1560176
+    },
+    {
+      "year": 2025,
+      "n": 50179
+    },
+    {
+      "year": 2026,
+      "n": 9556
+    }
+  ],
+  "year_time_s": 8.4,
+  "nulls": {
+    "species_null": {
+      "count": 748244,
+      "pct": 3.6
+    },
+    "genus_null": {
+      "count": 296393,
+      "pct": 1.4
+    },
+    "family_null": {
+      "count": 217154,
+      "pct": 1.0
+    },
+    "order_null": {
+      "count": 224877,
+      "pct": 1.1
+    },
+    "class_null": {
+      "count": 8388491,
+      "pct": 40.3
+    },
+    "phylum_null": {
+      "count": 7253,
+      "pct": 0.0
+    },
+    "date_null": {
+      "count": 556908,
+      "pct": 2.7
+    },
+    "lat_null": {
+      "count": 164417,
+      "pct": 0.8
+    },
+    "lon_null": {
+      "count": 164417,
+      "pct": 0.8
+    }
+  },
+  "nulls_time_s": 8.5,
+  "schema": [
+    {
+      "col": "gbifID",
+      "type": "BIGINT"
+    },
+    {
+      "col": "datasetKey",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "occurrenceID",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "kingdom",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "phylum",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "class",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "order",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "family",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "genus",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "species",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "infraspecificEpithet",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "taxonRank",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "scientificName",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "verbatimScientificName",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "verbatimScientificNameAuthorship",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "countryCode",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "locality",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "stateProvince",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "occurrenceStatus",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "individualCount",
+      "type": "BIGINT"
+    },
+    {
+      "col": "publishingOrgKey",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "decimalLatitude",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "decimalLongitude",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "coordinateUncertaintyInMeters",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "coordinatePrecision",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "elevation",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "elevationAccuracy",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "depth",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "depthAccuracy",
+      "type": "DOUBLE"
+    },
+    {
+      "col": "eventDate",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "day",
+      "type": "BIGINT"
+    },
+    {
+      "col": "month",
+      "type": "BIGINT"
+    },
+    {
+      "col": "year",
+      "type": "BIGINT"
+    },
+    {
+      "col": "taxonKey",
+      "type": "BIGINT"
+    },
+    {
+      "col": "speciesKey",
+      "type": "BIGINT"
+    },
+    {
+      "col": "basisOfRecord",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "institutionCode",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "collectionCode",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "catalogNumber",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "recordNumber",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "identifiedBy",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "dateIdentified",
+      "type": "TIMESTAMP"
+    },
+    {
+      "col": "license",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "rightsHolder",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "recordedBy",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "typeStatus",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "establishmentMeans",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "lastInterpreted",
+      "type": "TIMESTAMP WITH TIME ZONE"
+    },
+    {
+      "col": "mediaType",
+      "type": "VARCHAR"
+    },
+    {
+      "col": "issue",
+      "type": "VARCHAR"
+    }
+  ]
+}

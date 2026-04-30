@@ -1,0 +1,32 @@
+# 11 GB CSV original - NO subir al repo
+0022205-260226173443078.csv
+
+# Entorno virtual
+.venv/
+
+# Archivos grandes
+*.gpkg
+geoparquet/
+map_data.parquet
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Slides exportados (ya generados)
+slides/
+
+# Output temporal
+streamlit_out.txt
+streamlit_err.txt
+
+# PDFs generados
+propuesta_carrusel_conmapas.pdf
+
+# Archivos de QGIS
+*.qgz
+*.qgs
+*.prj
+*.cpg
+*.dbf

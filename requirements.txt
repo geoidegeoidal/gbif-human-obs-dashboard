@@ -1,0 +1,7 @@
+streamlit>=1.50
+plotly>=6.0
+folium>=0.19
+duckdb>=1.2
+pandas>=2.0
+numpy>=1.23
+streamlit-folium>=0.24

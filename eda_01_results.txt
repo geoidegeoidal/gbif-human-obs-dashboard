@@ -1,0 +1,48 @@
+﻿.venv\Scripts\python.ex
+e : Traceback (most 
+recent call last):
+En línea: 1 Carácter: 1
++ .venv\Scripts\python.
+exe eda_01_overview.py 
+2>&1 | Out-File 
+-Encoding ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Traceback (mo   
+ st recent call las    
+t)::String) [], Re    
+moteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  File "C:\JULLOAR-CODE
+\sp\gbif\eda_01_overvie
+w.py", line 19, in 
+<module>
+    print(f"\u2705 
+Total de registros: 
+{row_count:,.0f}  ({t1 
+- t0:.1f}s)")
+    ~~~~~^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+^^
+  File "C:\Python314\Li
+b\encodings\cp1252.py",
+ line 19, in encode
+    return codecs.charm
+ap_encode(input,self.er
+rors,encoding_table)[0]
+           ~~~~~~~~~~~~
+~~~~~~~~~^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 
+'charmap' codec can't 
+encode character 
+'\u2705' in position 
+0: character maps to 
+<undefined>
