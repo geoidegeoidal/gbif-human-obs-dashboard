@@ -23,7 +23,10 @@ st.set_page_config(
 )
 
 # ── Paths ─────────────────────────────────────────────────────
-BASE = os.path.dirname(os.path.abspath(__file__))
+try:
+    BASE = os.path.dirname(os.path.abspath(__file__))
+except NameError:
+    BASE = os.getcwd()
 PRECOMPUTED = os.path.join(BASE, "dashboard", "data", "precomputed")
 
 
@@ -84,10 +87,10 @@ st.markdown(f"""
         0deg,
         transparent,
         transparent 2px,
-        rgba(0,229,255,0.015) 2px,
-        rgba(0,229,255,0.015) 4px
+        rgba(0,229,255,0.012) 2px,
+        rgba(0,229,255,0.012) 4px
     );
-    pointer-events: none; z-index: 9999;
+    pointer-events: none; z-index: 1;
     animation: scanline 8s linear infinite;
 }}
 @keyframes scanline {{
