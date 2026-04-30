@@ -45,170 +45,275 @@ def load_parquet(name):
     return None
 
 
-# ── Cyberpunk Palette ──────────────────────────────────────────
-BG = "#06060c"
-BG_CARD = "#0a0a16"
-BG_SIDEBAR = "#04040a"
-CYBER_CYAN = "#00e5ff"
-CYBER_MAGENTA = "#ff00e5"
-CYBER_GREEN = "#00ff88"
-CYBER_AMBER = "#ffaa00"
-CYBER_PINK = "#ff4088"
+# ── Bioluminescence Palette ────────────────────────────────────
+BG = "#020817"
+BG_CARD = "rgba(10, 22, 40, 0.55)"
+BG_SIDEBAR = "#010510"
+CYBER_CYAN = "#06d6a0"
+CYBER_MAGENTA = "#e040fb"
+CYBER_GREEN = "#06d6a0"
+CYBER_AMBER = "#ffd166"
+CYBER_PINK = "#ef476f"
 CYBER_PURPLE = "#b040ff"
-CYBER_RED = "#ff3040"
-CYBER_WHITE = "#e0e0f0"
-CYBER_GRAY = "#7070a0"
-CYBER_DIM = "#303055"
+CYBER_RED = "#ef476f"
+CYBER_WHITE = "#e0e8f0"
+CYBER_GRAY = "#6882a0"
+CYBER_DIM = "#1a2744"
+ACCENT_BLUE = "#00b4d8"
 
-# ── Cyberpunk CSS ─────────────────────────────────────────────
+# ── Bioluminescence CSS ───────────────────────────────────────
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {{
+    --bio-bg: #020817;
+    --bio-surface: rgba(10, 22, 40, 0.55);
+    --bio-glow-cyan: #06d6a0;
+    --bio-glow-magenta: #e040fb;
+    --bio-glow-amber: #ffd166;
+    --bio-glow-coral: #ef476f;
+    --bio-glow-blue: #00b4d8;
+    --bio-text: #e0e8f0;
+    --bio-muted: #6882a0;
+    --bio-border: #1a2744;
+}}
 
 .stApp {{
-    background: radial-gradient(ellipse at top, #0a0a20 0%, {BG} 70%);
+    background: linear-gradient(175deg, #0a1628 0%, #020817 40%, #030a1a 100%);
+}}
+
+.stApp::before {{
+    content: "";
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        radial-gradient(ellipse 800px 600px at 20% 30%, rgba(6,214,160,0.03) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 400px at 80% 70%, rgba(224,64,251,0.02) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+}}
+
+.stApp::after {{
+    content: "";
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(6,214,160,0.008) 2px, rgba(6,214,160,0.008) 4px);
+    pointer-events: none; z-index: 0;
+    animation: scanlines 8s linear infinite;
+}}
+@keyframes scanlines {{
+    0% {{ transform: translateY(0); }}
+    100% {{ transform: translateY(4px); }}
 }}
 
 .stApp header {{ background: transparent !important; }}
 section[data-testid="stSidebar"] {{
-    background: {BG_SIDEBAR} !important;
+    background: linear-gradient(180deg, #010510 0%, #020a18 100%) !important;
     border-right: 1px solid {CYBER_DIM} !important;
 }}
 #MainMenu {{ visibility: hidden; }}
 footer {{ visibility: hidden; }}
 
 h1, h2, h3 {{
-    font-family: 'Rajdhani', sans-serif !important;
+    font-family: 'Inter', sans-serif !important;
     font-weight: 700 !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }}
 
+/* ── KPI Cards with glassmorphism ─────────────────────── */
 .cyber-card {{
-    background: rgba(10, 10, 22, 0.85);
-    border: 1px solid rgba(0,229,255,0.12);
-    border-radius: 4px;
-    padding: 20px 24px;
+    background: {BG_CARD};
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(6,214,160,0.12);
+    border-radius: 12px;
+    padding: 22px 24px;
     text-align: center;
-    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
-    transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}}
+.cyber-card::before {{
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--bio-glow-cyan) 50%, transparent 100%);
+    opacity: 0.4;
+    animation: pulse_border 3s ease-in-out infinite;
+}}
+@keyframes pulse_border {{
+    0%, 100% {{ opacity: 0.2; }}
+    50% {{ opacity: 0.7; }}
 }}
 .cyber-card:hover {{
-    border-color: {CYBER_CYAN};
-    box-shadow: 0 0 20px rgba(0,229,255,0.2), inset 0 0 20px rgba(0,229,255,0.05);
+    border-color: rgba(6,214,160,0.35);
+    box-shadow: 0 8px 32px rgba(6,214,160,0.08), 0 0 20px rgba(6,214,160,0.04);
+    transform: translateY(-2px);
 }}
 
 .cyber-kpi-value {{
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 2.3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
     font-weight: 700;
     line-height: 1.1;
 }}
 .cyber-kpi-label {{
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.7rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 5px;
-    color: rgba(224, 224, 240, 0.6);
-    margin-top: 6px;
+    color: {CYBER_GRAY};
+    margin-top: 8px;
 }}
 .cyber-kpi-sub {{
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.62rem;
-    color: rgba(224, 224, 240, 0.35);
-    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(104,130,160,0.6);
+    margin-top: 6px;
 }}
 
+/* ── Title ────────────────────────────────────────────── */
 .cyber-title {{
-    font-family: 'Share Tech Mono', monospace !important;
-    font-size: 2rem;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.8rem;
     color: {CYBER_CYAN};
-    text-shadow: 0 0 15px rgba(0,229,255,0.5), 0 0 40px rgba(0,229,255,0.2);
+    text-shadow: 0 0 20px rgba(6,214,160,0.4), 0 0 60px rgba(6,214,160,0.1);
     margin-bottom: 0;
+    letter-spacing: 2px;
 }}
 
+/* ── Divider ──────────────────────────────────────────── */
 .cyber-divider {{
     height: 1px;
-    background: linear-gradient(90deg, transparent, {CYBER_CYAN}, transparent);
-    margin: 16px 0;
-    opacity: 0.3;
+    background: linear-gradient(90deg, transparent 0%, rgba(6,214,160,0.3) 30%, rgba(0,180,216,0.3) 70%, transparent 100%);
+    margin: 20px 0;
 }}
 
+/* ── Info/Warn boxes ──────────────────────────────────── */
 .cyber-info-box {{
-    background: rgba(0,229,255,0.04);
+    background: rgba(6,214,160,0.04);
+    backdrop-filter: blur(8px);
     border-left: 3px solid {CYBER_CYAN};
-    padding: 14px 18px;
-    margin: 12px 0;
-    font-family: 'Rajdhani', sans-serif;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
     color: {CYBER_WHITE};
+    line-height: 1.6;
 }}
 
 .cyber-warn-box {{
-    background: rgba(255,48,64,0.06);
+    background: rgba(239,71,111,0.05);
+    backdrop-filter: blur(8px);
     border-left: 3px solid {CYBER_RED};
-    padding: 14px 18px;
-    margin: 12px 0;
-    font-family: 'Rajdhani', sans-serif;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
     color: {CYBER_WHITE};
+    line-height: 1.6;
 }}
 
+/* ── Section titles ───────────────────────────────────── */
 .cyber-section-title {{
-    font-family: 'Share Tech Mono', monospace !important;
+    font-family: 'JetBrains Mono', monospace !important;
     color: {CYBER_CYAN};
-    text-shadow: 0 0 8px rgba(0,229,255,0.3);
-    letter-spacing: 4px;
-    font-size: 0.75rem;
-    margin-bottom: 8px;
+    text-shadow: 0 0 12px rgba(6,214,160,0.25);
+    letter-spacing: 5px;
+    font-size: 0.72rem;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(6,214,160,0.08);
 }}
 
+/* ── Tabs ─────────────────────────────────────────────── */
 .stTabs [data-baseweb="tab-list"] {{
-    gap: 8px;
+    gap: 6px;
     background: transparent;
 }}
 .stTabs [data-baseweb="tab"] {{
-    font-family: 'Share Tech Mono', monospace !important;
-    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem;
     color: {CYBER_GRAY} !important;
     background: transparent;
     border: 1px solid {CYBER_DIM};
-    padding: 8px 18px;
+    border-radius: 6px;
+    padding: 8px 16px;
     letter-spacing: 2px;
+    transition: all 0.3s ease;
 }}
 .stTabs [aria-selected="true"] {{
     color: {CYBER_CYAN} !important;
-    background: rgba(0,229,255,0.06) !important;
-    border-color: {CYBER_CYAN} !important;
-    box-shadow: 0 0 12px rgba(0,229,255,0.3);
+    background: rgba(6,214,160,0.06) !important;
+    border-color: rgba(6,214,160,0.4) !important;
+    box-shadow: 0 0 16px rgba(6,214,160,0.12);
 }}
 
+/* ── Footer ───────────────────────────────────────────── */
 .cyber-footer {{
     text-align: center;
-    padding: 20px;
-    margin-top: 30px;
+    padding: 24px;
+    margin-top: 40px;
     border-top: 1px solid {CYBER_DIM};
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: {CYBER_DIM};
-    letter-spacing: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: {CYBER_GRAY};
+    letter-spacing: 4px;
 }}
 
+/* ── Radar boxes ──────────────────────────────────────── */
 .cyber-radar-box {{
-    background: rgba(10, 10, 22, 0.85);
+    background: {BG_CARD};
+    backdrop-filter: blur(12px);
     border: 1px solid {CYBER_DIM};
-    padding: 12px 18px;
+    border-radius: 10px;
+    padding: 16px 20px;
     margin: 8px 0;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease;
+}}
+.cyber-radar-box:hover {{
+    border-color: rgba(6,214,160,0.25);
 }}
 
-@keyframes glitch {{
-    0% {{ text-shadow: 0 0 10px {CYBER_CYAN}; }}
-    50% {{ text-shadow: 0 0 20px {CYBER_MAGENTA}, 0 0 30px {CYBER_CYAN}; }}
-    100% {{ text-shadow: 0 0 10px {CYBER_CYAN}; }}
+/* ── Animations ───────────────────────────────────────── */
+@keyframes glow_pulse {{
+    0%, 100% {{ text-shadow: 0 0 15px rgba(6,214,160,0.4); }}
+    50% {{ text-shadow: 0 0 25px rgba(6,214,160,0.6), 0 0 50px rgba(6,214,160,0.2); }}
 }}
-.cyber-title:hover {{
-    animation: glitch 0.5s ease;
+.cyber-title {{
+    animation: glow_pulse 4s ease-in-out infinite;
+}}
+
+/* ── Streamlit metric overrides ───────────────────────── */
+div[data-testid="stMetricValue"] {{
+    font-family: 'JetBrains Mono', monospace !important;
+    color: {CYBER_WHITE} !important;
+}}
+div[data-testid="stMetricLabel"],
+div[data-testid="stMetricDelta"] {{
+    font-family: 'Inter', sans-serif !important;
+    color: {CYBER_GRAY} !important;
+}}
+
+/* ── Radio buttons ────────────────────────────────────── */
+div[role="radiogroup"] > label {{
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 1px;
+    padding: 6px 12px !important;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}}
+div[role="radiogroup"] > label:hover {{
+    background: rgba(6,214,160,0.06);
+}}
+
+/* ── Plotly chart container ───────────────────────────── */
+div[data-testid="stPlotlyChart"] {{
+    border-radius: 12px;
+    overflow: hidden;
 }}
 </style>
 """, unsafe_allow_html=True)
@@ -258,20 +363,20 @@ def warn(text):
 
 
 # ── Plotly theme ───────────────────────────────────────────────
-pio.templates["cyber"] = go.layout.Template(layout=dict(
+pio.templates["biolum"] = go.layout.Template(layout=dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color=CYBER_WHITE, family="Rajdhani, sans-serif", size=13),
-    title=dict(font=dict(color=CYBER_CYAN, family="Share Tech Mono, monospace", size=18),
+    font=dict(color=CYBER_WHITE, family="Inter, sans-serif", size=13),
+    title=dict(font=dict(color=CYBER_CYAN, family="JetBrains Mono, monospace", size=16),
                x=0.02),
-    xaxis=dict(gridcolor=CYBER_DIM, linecolor=CYBER_DIM, zerolinecolor=CYBER_DIM,
+    xaxis=dict(gridcolor="rgba(26,39,68,0.5)", linecolor=CYBER_DIM, zerolinecolor=CYBER_DIM,
                title_font=dict(color=CYBER_GRAY)),
-    yaxis=dict(gridcolor=CYBER_DIM, linecolor=CYBER_DIM, zerolinecolor=CYBER_DIM,
+    yaxis=dict(gridcolor="rgba(26,39,68,0.5)", linecolor=CYBER_DIM, zerolinecolor=CYBER_DIM,
                title_font=dict(color=CYBER_GRAY)),
     legend=dict(font=dict(color=CYBER_GRAY), bgcolor="rgba(0,0,0,0)"),
     margin=dict(l=10, r=10, t=50, b=10),
 ))
-pio.templates.default = "cyber"
+pio.templates.default = "biolum"
 
 
 # ── Chart builders ─────────────────────────────────────────────
@@ -281,7 +386,7 @@ def chart_hbar(df, xcol, ycol, title, color_col=None, colors=None):
     fig.update_layout(showlegend=False, yaxis=dict(autorange="reversed"),
                        xaxis_title="", yaxis_title="")
     fig.update_traces(hovertemplate="%{y}: <b>%{x:,.0f}</b><extra></extra>",
-                       marker=dict(opacity=0.8))
+                       marker=dict(opacity=0.85, line=dict(width=0)))
     return fig
 
 
@@ -290,9 +395,9 @@ def chart_area(df, xcol, ycol, title, color=CYBER_CYAN):
     fig.add_trace(go.Scatter(
         x=df[xcol], y=df[ycol],
         fill="tozeroy", mode="lines",
-        line=dict(color=color, width=2),
-        fillcolor=f"rgba(0,229,255,0.12)",
-        hovertemplate="%{{x}}: <b>%{{y:,.0f}}</b><extra></extra>",
+        line=dict(color=color, width=2.5),
+        fillcolor=f"rgba(6,214,160,0.08)",
+        hovertemplate="%{x}: <b>%{y:,.0f}</b><extra></extra>",
     ))
     fig.update_layout(title=title, xaxis_title="", yaxis_title="")
     return fig
@@ -319,28 +424,28 @@ def chart_radar(dimensions, values, title):
 
 
 def chart_hexbin(df, title):
-    """Hexbin density chart usando plotly (alternativa al heatmap)."""
+    """Hexbin density chart usando plotly."""
     fig = ff.create_hexbin_map(
         data_frame=df, lat="lat", lon="lon",
-        nx_hexagon=30, opacity=0.5, min_count=1,
-        labels={"color": "Obs"},
+        nx_hexagon=30, opacity=0.6, min_count=1,
+        labels={"color": "Observaciones"},
         color_continuous_scale=[
-            [0.0, "#06060c"], [0.15, "#0a0030"], [0.3, "#0000aa"],
-            [0.5, "#0044ff"], [0.65, "#00aaff"], [0.8, "#00e5ff"],
-            [0.9, "#ff00e5"], [1.0, "#ff4088"],
+            [0.0, "#020817"], [0.12, "#0a1628"], [0.25, "#003566"],
+            [0.4, "#0077b6"], [0.55, "#00b4d8"], [0.7, "#06d6a0"],
+            [0.85, "#e040fb"], [1.0, "#ef476f"],
         ],
         map_style="carto-darkmatter",
         zoom=4, center={"lat": -35.5, "lon": -71.5},
         height=550,
     )
     fig.update_layout(title=title, margin=dict(l=0, r=0, t=50, b=0),
-                       coloraxis_showscale=False)
+                       coloraxis_showscale=True)
     return fig
 
 
 # ── Map builder (cyberpunk cluster + hexbin) ───────────────────
 def build_cluster_map(df, mode="cluster"):
-    """Mapa cyberpunk con clusters neon o hexbin interactivo."""
+    """Mapa bioluminiscente con clusters o heatmap."""
     m = folium.Map(
         location=[-35.5, -71.5], zoom_start=5,
         tiles=None, control_scale=True,
@@ -348,42 +453,42 @@ def build_cluster_map(df, mode="cluster"):
     folium.TileLayer(
         tiles="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
         attr='© OSM | CartoDB',
-        name="CYBER_BASE",
-        control=False,
+        name="BASE", control=False,
     ).add_to(m)
 
     if len(df) == 0:
         return m
 
     if mode == "cluster":
-        sample = df.sample(min(len(df), 8000)) if len(df) > 8000 else df
-        marker_cluster = MarkerCluster(
-            name="CLUSTERS NEON",
-            icon_create_function="""
-                function(cluster) {
-                    var count = cluster.getChildCount();
-                    var size = count < 100 ? 30 : count < 500 ? 40 : count < 2000 ? 50 : 60;
-                    var color = count < 100 ? '#00e5ff' : count < 500 ? '#00ff88' : count < 2000 ? '#ffaa00' : '#ff00e5';
-                    return L.divIcon({
-                        html: '<div style="background:' + color + '20; border:2px solid ' + color +
-                              '; border-radius:50%; width:' + size + 'px; height:' + size +
-                              'px; display:flex; align-items:center; justify-content:center;' +
-                              ' font-family:monospace; font-size:11px; color:' + color +
-                              '; text-shadow:0 0 8px ' + color + '; box-shadow:0 0 15px ' +
-                              color + '40, inset 0 0 10px ' + color + '20;">' + count + '</div>',
-                        className: '', iconSize: L.point(size, size)
-                    });
-                }
-            """,
+        sample = df.sample(min(len(df), 5000)) if len(df) > 5000 else df
+        icon_fn = """
+        function(cluster) {
+            var count = cluster.getChildCount();
+            var size = count < 100 ? 32 : count < 500 ? 42 : count < 2000 ? 52 : 62;
+            var color = count < 100 ? '#06d6a0' : count < 500 ? '#00b4d8' : count < 2000 ? '#ffd166' : '#e040fb';
+            return L.divIcon({
+                html: '<div style="background:' + color + '18; border:2px solid ' + color +
+                      '; border-radius:50%; width:' + size + 'px; height:' + size +
+                      'px; display:flex; align-items:center; justify-content:center;' +
+                      ' font-family:monospace; font-size:11px; color:' + color +
+                      '; text-shadow:0 0 8px ' + color + '; box-shadow:0 0 20px ' +
+                      color + '40;">' + count + '</div>',
+                className: '', iconSize: L.point(size, size)
+            });
+        }
+        """
+        cluster_layer = MarkerCluster(
+            name="CLUSTERS",
+            icon_create_function=icon_fn,
+            options={"maxClusterRadius": 45, "spiderfyOnMaxZoom": True,
+                     "showCoverageOnHover": False, "zoomToBoundsOnClick": True},
         ).add_to(m)
         for _, row in sample.iterrows():
             folium.CircleMarker(
                 location=[row["lat"], row["lon"]],
-                radius=2,
-                color="#00e5ff",
-                fill=True,
-                fill_opacity=0.6,
-            ).add_to(marker_cluster)
+                radius=2.5, color="#06d6a0", fill=True,
+                fill_opacity=0.6, stroke=True, weight=1, opacity=0.5,
+            ).add_to(cluster_layer)
 
     elif mode == "hexbin":
         folium.plugins.HeatMap(
@@ -422,15 +527,15 @@ absent = kpi.get("absent", 0)
 
 # ── Sidebar ────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("""
-    <div style="text-align:center; margin-bottom:20px;">
-        <div style="font-size:2.4rem; filter: drop-shadow(0 0 12px #00e5ff);">▣</div>
-        <div style="font-family:'Share Tech Mono',monospace; font-size:1rem; color:#00e5ff;
-                    text-shadow: 0 0 10px rgba(0,229,255,0.5); letter-spacing:3px;">
+    st.markdown(f"""
+    <div style="text-align:center; margin-bottom:24px;">
+        <div style="font-size:2.2rem; filter: drop-shadow(0 0 16px {CYBER_CYAN});">🌊</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:0.95rem; color:{CYBER_CYAN};
+                    text-shadow: 0 0 12px rgba(6,214,160,0.4); letter-spacing:3px; margin-top:4px;">
             GBIF HUMAN OBS
         </div>
-        <div style="font-family:'Rajdhani',sans-serif; font-size:0.65rem; color:#7070a0;
-                    letter-spacing:4px; text-transform:uppercase;">
+        <div style="font-family:'Inter',sans-serif; font-size:0.6rem; color:{CYBER_GRAY};
+                    letter-spacing:4px; text-transform:uppercase; margin-top:4px;">
             Chile · Animalia · @conmapas
         </div>
     </div>
@@ -446,8 +551,8 @@ with st.sidebar:
     cyber_divider()
 
     st.markdown(f"""
-    <div style="font-family:'Share Tech Mono',monospace; font-size:0.55rem; color:{CYBER_DIM};
-                line-height:2; letter-spacing:1px;">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:0.52rem; color:{CYBER_GRAY};
+                line-height:2.2; letter-spacing:1px; opacity:0.7;">
         <div>FUENTE: GBIF.ORG</div>
         <div>REINO: ANIMALIA</div>
         <div>REGIÓN: CHILE (CL)</div>
@@ -460,8 +565,8 @@ with st.sidebar:
 # ── Main header ────────────────────────────────────────────────
 st.markdown(f'<div class="cyber-title">▸ OBSERVACIONES HUMANAS</div>', unsafe_allow_html=True)
 st.markdown(f"""
-<div style="font-family:'Rajdhani',sans-serif; font-size:0.7rem; color:{CYBER_GRAY};
-            letter-spacing:5px; text-transform:uppercase; margin-bottom:12px;">
+<div style="font-family:'Inter',sans-serif; font-size:0.7rem; color:{CYBER_GRAY};
+            letter-spacing:5px; text-transform:uppercase; margin-bottom:16px;">
     {numfmt(total)} REGISTROS · REINO ANIMALIA · CHILE
 </div>
 """, unsafe_allow_html=True)
@@ -706,7 +811,7 @@ elif tab == "▸ TEMPORAL":
     for yr, title, desc in events:
         st.markdown(f"""
         <div style="display:flex; align-items:baseline; gap:16px; margin:6px 0;
-                    font-family:'Share Tech Mono',monospace;">
+                    font-family:'JetBrains Mono',monospace;">
             <span style="color:{CYBER_CYAN}; min-width:50px; font-weight:bold;">{yr}</span>
             <span style="color:{CYBER_WHITE}; font-weight:bold;">{title}</span>
             <span style="color:{CYBER_GRAY}; font-size:0.75rem;">{desc}</span>
@@ -770,8 +875,8 @@ elif tab == "▸ CALIDAD":
                      unsafe_allow_html=True)
         kpi_row([
             (pctfmt(sin, unc_tot), "SIN DATO DE PRECISIÓN", CYBER_RED, f"{numfmt(sin)} registros"),
-            (f"{unc_data.get('mediana_m',0):,.0f}m", "MEDIANA (CUANDO HAY)", CYBER_AMBER),
-            (f"{unc_data.get('promedio_m',0):,.0f}m", "PROMEDIO (CUANDO HAY)", CYBER_CYAN),
+            (f"{unc_data.get('mediana_m',0):,.0f}m", "MEDIANA (CUANDO HAY)", CYBER_AMBER, "con dato"),
+            (f"{unc_data.get('promedio_m',0):,.0f}m", "PROMEDIO (CUANDO HAY)", CYBER_CYAN, "con dato"),
             ("7,945km", "INCERTIDUMBRE MÁX.", CYBER_MAGENTA, "FOSSIL_SPECIMEN"),
         ])
 
@@ -807,7 +912,7 @@ elif tab == "▸ CALIDAD":
     ]
     for num, color, check, detail in checks:
         st.markdown(f"""
-        <div style="display:flex; gap:12px; margin:8px 0; font-family:'Rajdhani',sans-serif;">
+        <div style="display:flex; gap:12px; margin:8px 0; font-family:'Inter',sans-serif;">
             <span style="color:{color}; font-weight:bold; min-width:28px;">[{num}]</span>
             <span style="color:{CYBER_WHITE}; flex:1;">{check}</span>
             <span style="color:{CYBER_GRAY}; font-size:0.75rem;">{detail}</span>
@@ -844,7 +949,7 @@ elif tab == "▸ SESGOS":
     with coll:
         st.markdown(f"""
         <div class="cyber-radar-box" style="border-color:{CYBER_CYAN};">
-            <div style="font-family:'Share Tech Mono',monospace; color:{CYBER_CYAN};
+            <div style="font-family:'JetBrains Mono',monospace; color:{CYBER_CYAN};
                         font-size:0.8rem; margin-bottom:6px;">■ OBSERVACIÓN HUMANA</div>
             <div style="color:{CYBER_GRAY}; font-size:0.75rem;">
                 89.7% del dataset · Ciencia ciudadana<br>
@@ -858,7 +963,7 @@ elif tab == "▸ SESGOS":
     with colr:
         st.markdown(f"""
         <div class="cyber-radar-box" style="border-color:{CYBER_MAGENTA};">
-            <div style="font-family:'Share Tech Mono',monospace; color:{CYBER_MAGENTA};
+            <div style="font-family:'JetBrains Mono',monospace; color:{CYBER_MAGENTA};
                         font-size:0.8rem; margin-bottom:6px;">■ ESPÉCIMEN DE MUSEO</div>
             <div style="color:{CYBER_GRAY}; font-size:0.75rem;">
                 2.0% del dataset · Colecciones científicas<br>
@@ -891,7 +996,7 @@ elif tab == "▸ SESGOS":
     for color, title, txt in biases:
         st.markdown(f"""
         <div style="border-left:3px solid {color}; padding:8px 16px; margin:10px 0;">
-            <div style="font-family:'Share Tech Mono',monospace; color:{color};
+            <div style="font-family:'JetBrains Mono',monospace; color:{color};
                         font-size:0.8rem; margin-bottom:4px;">▸ {title}</div>
             <div style="color:{CYBER_GRAY}; font-size:0.8rem;">{txt}</div>
         </div>
@@ -900,7 +1005,7 @@ elif tab == "▸ SESGOS":
     st.markdown(f"""
     <div style="text-align:center; margin-top:20px; padding:16px;
                 border:1px solid {CYBER_CYAN}; border-left:0; border-right:0;">
-        <span style="font-family:'Share Tech Mono',monospace; color:{CYBER_WHITE};
+        <span style="font-family:'JetBrains Mono',monospace; color:{CYBER_WHITE};
                      font-size:1rem; letter-spacing:3px;">
             "UN DATO SIN CONTEXTO ES UN MAPA QUE MIENTE"
         </span>
