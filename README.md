@@ -23,6 +23,16 @@ Diseño *Bioluminescence* — inspirado en la luminiscencia de organismos de agu
 
 ---
 
+## De los datos al dashboard
+
+![Flujo de datos: la preparación opcional usa un CSV externo; Streamlit consulta los JSON y Parquet incluidos y muestra gráficos y mapas con una muestra de coordenadas.](docs/readme/data-workflow.svg)
+
+**Para consultar:** abre los resultados precalculados incluidos. **Para repetir el análisis:** necesitas la descarga CSV externa y los scripts de preparación. El mapa utiliza una muestra de coordenadas, no todos los registros, y no consulta GBIF en tiempo real.
+
+[Abrir el diagrama](docs/readme/data-workflow.svg) · [Fuente editable HTML](docs/readme/data-workflow.html). La figura usa Inter y JetBrains Mono cuando están disponibles, con fuentes de sistema como alternativa.
+
+---
+
 <a id="ejecucion-local"></a>
 ## ⚡ Ejecución local
 
