@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Streamlit-Live-06d6a0?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit Live"/>
+  <img src="https://img.shields.io/badge/Streamlit-Dashboard-06d6a0?style=for-the-badge&logo=streamlit&logoColor=white" alt="Dashboard Streamlit"/>
   <img src="https://img.shields.io/badge/GBIF-20.8M_records-00b4d8?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0iIzAwYjRkOCIvPjwvc3ZnPg==&logoColor=white" alt="GBIF"/>
   <img src="https://img.shields.io/badge/Python-3.11+-ffd166?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
   <img src="https://img.shields.io/badge/Plotly-6.7-e040fb?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly"/>
@@ -11,6 +11,10 @@
 
 Diseño *Bioluminescence* — inspirado en la luminiscencia de organismos de aguas profundas.
 
+**[Ejecución local](#ejecucion-local) · [Secciones](#secciones) · [Datos y alcance](#datos) · [Diseño](#diseno)**
+
+> **Cómo leerlo:** los registros reflejan esfuerzo de observación y disponibilidad de datos, no una muestra uniforme de la biodiversidad. Un área con más registros no necesariamente tiene mayor abundancia o riqueza de especies.
+
 <p align="center">
   <a href="https://gbif-human-obs-dashboard-nnpqgsdq2g2a6h3dxxw5vi.streamlit.app/">
     <strong>🔗 Ver Dashboard en vivo →</strong>
@@ -19,6 +23,35 @@ Diseño *Bioluminescence* — inspirado en la luminiscencia de organismos de agu
 
 ---
 
+<a id="ejecucion-local"></a>
+## ⚡ Ejecución local
+
+Usa **Python 3.11** como referencia, coherente con el entorno de desarrollo del repositorio.
+
+```bash
+git clone https://github.com/geoidegeoidal/gbif-human-obs-dashboard.git
+cd gbif-human-obs-dashboard
+python -m venv .venv
+```
+
+Activa el entorno según tu terminal:
+
+| Terminal | Comando |
+| :--- | :--- |
+| PowerShell (Windows) | `.venv\Scripts\Activate.ps1` |
+| cmd (Windows) | `.venv\Scripts\activate.bat` |
+| macOS / Linux | `source .venv/bin/activate` |
+
+```bash
+python -m pip install -r requirements.txt
+python -m streamlit run streamlit_app.py
+```
+
+Abre la dirección que muestre Streamlit, normalmente **http://localhost:8501**. El punto de entrada anterior utiliza los JSON y el Parquet precalculados incluidos en [`dashboard/data/precomputed/`](dashboard/data/precomputed/): **no requiere el CSV original de 20,8 millones de registros para consultar el dashboard**.
+
+---
+
+<a id="secciones"></a>
 ## ✨ Características
 
 | Sección | Qué muestra |
@@ -42,7 +75,7 @@ El dashboard ofrece **3 modos de visualización geoespacial**:
 
 ## 🚀 Deploy
 
-El dashboard está desplegado en **Streamlit Community Cloud** y se actualiza automáticamente al hacer push a `master`.
+El enlace de producción del proyecto corresponde a **Streamlit Community Cloud**. Para un despliegue propio, selecciona `streamlit_app.py` como punto de entrada y `requirements.txt` como dependencias. La rama conectada y la actualización automática dependen de la configuración de la aplicación en Streamlit Cloud.
 
 **URL de producción:**
 ```
@@ -58,7 +91,7 @@ https://gbif-human-obs-dashboard-nnpqgsdq2g2a6h3dxxw5vi.streamlit.app/
 | Framework | [Streamlit](https://streamlit.io/) ≥ 1.50 |
 | Gráficos | [Plotly](https://plotly.com/python/) ≥ 6.0 |
 | Mapas | [Folium](https://python-visualization.github.io/folium/) ≥ 0.19 + streamlit-folium ≥ 0.24 |
-| Datos | [DuckDB](https://duckdb.org/) ≥ 1.2 (queries directas al CSV de 11 GB) |
+| Preparación de datos | [DuckDB](https://duckdb.org/) ≥ 1.2 para los análisis sobre el CSV original |
 | DataFrames | [Pandas](https://pandas.pydata.org/) ≥ 2.0 |
 | Tipografías | JetBrains Mono + Inter (Google Fonts) |
 
@@ -68,7 +101,7 @@ https://gbif-human-obs-dashboard-nnpqgsdq2g2a6h3dxxw5vi.streamlit.app/
 
 ```
 gbif-human-obs-dashboard/
-├── streamlit_app.py              ← App principal (single-file, ~1000 líneas)
+├── streamlit_app.py              ← App principal; lee datos precalculados
 ├── requirements.txt              ← Dependencias para Streamlit Cloud
 ├── .streamlit/
 │   └── config.toml               ← Tema oscuro + configuración
@@ -89,6 +122,7 @@ gbif-human-obs-dashboard/
 
 ---
 
+<a id="datos"></a>
 ## 📊 Datos
 
 | Métrica | Valor |
@@ -102,10 +136,18 @@ gbif-human-obs-dashboard/
 | País | Chile (CL) |
 | Reino | Animalia |
 
-**Fuente:** [GBIF.org](https://www.gbif.org/) — DOI de descarga: `0022205-260226173443078`
+**Fuente:** [GBIF.org](https://www.gbif.org/) — identificador de descarga utilizado por el proyecto: `0022205-260226173443078`. No es un DOI; consulta la cita de la descarga en GBIF antes de reutilizarla en una publicación.
+
+| Quieres… | Insumos necesarios |
+| :--- | :--- |
+| Consultar el dashboard | Archivos precalculados incluidos en el repositorio |
+| Repetir o modificar el análisis original | CSV de descarga externo y los scripts de preparación/EDA |
+
+Los conteos de esta tabla describen el conjunto analizado, no una consulta en tiempo real a GBIF. El mapa usa una muestra de coordenadas (`coords_sample.parquet`), no todos los registros originales. El CSV original no está versionado en este repositorio.
 
 ---
 
+<a id="diseno"></a>
 ## 🎨 Diseño: Bioluminescence
 
 El concepto visual está inspirado en la **bioluminiscencia oceánica** — organismos de aguas profundas que generan su propia luz. Es una metáfora visual para un dashboard de biodiversidad que ilumina patrones ocultos en datos masivos.
@@ -120,27 +162,6 @@ El concepto visual está inspirado en la **bioluminiscencia oceánica** — orga
 | Acento marino | Azul océano | `#00b4d8` |
 
 **Efectos CSS:** glassmorphism con `backdrop-filter: blur`, bordes pulsantes animados, scanlines sutiles, tipografía monospace para datos.
-
----
-
-## ⚡ Ejecución Local
-
-```bash
-# Clonar el repositorio
-git clone https://github.com/geoidegeoidal/gbif-human-obs-dashboard.git
-cd gbif-human-obs-dashboard
-
-# Crear entorno virtual
-python -m venv .venv
-.venv/Scripts/activate   # Windows
-# source .venv/bin/activate  # macOS/Linux
-
-# Instalar dependencias
-pip install -r requirements.txt
-
-# Ejecutar
-streamlit run streamlit_app.py
-```
 
 ---
 
