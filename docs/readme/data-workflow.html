@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GBIF: preparación y consulta de datos</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #020817; color: #e0e8f0; }
+    main { max-width: 960px; margin: 0 auto; }
+    svg { display: block; width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+<main>
+  <!--
+    Source: streamlit_app.py:49-79 (Bioluminescence palette and font import).
+    Paper #020817; surface #0a1628; ink #e0e8f0; muted #6882a0;
+    focal teal #06d6a0; secondary magenta #e040fb and amber #ffd166 are omitted.
+    Inter labels; JetBrains Mono for file formats; system fallbacks, no remote fonts.
+    Evidence: README data scope and streamlit_app.py:30-45 (precomputed readers).
+    Edit this HTML, then extract its first svg block verbatim to data-workflow.svg,
+    prefixed with the UTF-8 XML declaration. Keep the title and desc as first children.
+  -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="data-workflow-title data-workflow-desc">
+    <title id="data-workflow-title">GBIF: preparación y consulta de datos</title>
+    <desc id="data-workflow-desc">Repetir el análisis requiere un CSV externo y preparación, pero consultar Streamlit solo utiliza los JSON y Parquet incluidos; el mapa muestra una muestra de coordenadas, no datos en tiempo real.</desc>
+    <defs>
+      <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+        <path d="M0 0 L8 4 L0 8 Z" fill="#6882a0" />
+      </marker>
+      <marker id="arrow-accent" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+        <path d="M0 0 L8 4 L0 8 Z" fill="#06d6a0" />
+      </marker>
+      <marker id="arrow-link" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+        <path d="M0 0 L8 4 L0 8 Z" fill="#00b4d8" />
+      </marker>
+    </defs>
+
+    <rect width="960" height="600" fill="#020817" />
+    <g font-family="Inter, Arial, sans-serif" fill="#e0e8f0">
+      <text x="40" y="56" font-size="32" font-weight="600">De los datos a la exploración</text>
+      <text x="40" y="92" font-size="24">El dashboard abre resultados ya preparados.</text>
+
+      <!-- Optional preparation and normal viewing are separate zones. -->
+      <rect x="40" y="128" width="632" height="172" rx="8" fill="#0a1628" stroke="#6882a0" stroke-dasharray="4 4" />
+      <text x="64" y="164" font-size="20" font-weight="600">PREPARACIÓN OPCIONAL</text>
+      <rect x="40" y="340" width="880" height="176" rx="8" fill="#0a1628" stroke="#1a2744" />
+      <text x="400" y="372" font-size="20" font-weight="600">CONSULTA · SIN EL CSV ORIGINAL</text>
+
+      <!-- Connectors precede nodes; each arrival has its own clear port. -->
+      <path d="M296 232 H360" fill="none" stroke="#6882a0" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
+      <path d="M496 276 V312 Q496 320 488 320 H296 Q288 320 288 328 V392" fill="none" stroke="#6882a0" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow)" />
+      <path d="M336 444 H400" fill="none" stroke="#06d6a0" stroke-width="2" marker-end="url(#arrow-accent)" />
+      <path d="M640 444 H704" fill="none" stroke="#6882a0" stroke-width="2" marker-end="url(#arrow)" />
+
+      <rect x="64" y="188" width="232" height="88" rx="8" fill="#020817" stroke="#6882a0" stroke-dasharray="4 4" />
+      <text x="180" y="224" text-anchor="middle" font-size="24" font-weight="600">Descarga GBIF</text>
+      <text x="180" y="256" text-anchor="middle" font-size="20" font-family="'JetBrains Mono', Consolas, monospace">CSV externo</text>
+
+      <rect x="360" y="188" width="272" height="88" rx="8" fill="#020817" stroke="#6882a0" stroke-dasharray="4 4" />
+      <text x="496" y="224" text-anchor="middle" font-size="24" font-weight="600">Preparar y resumir</text>
+      <text x="496" y="256" text-anchor="middle" font-size="20">Scripts de análisis</text>
+
+      <text x="704" y="208" font-size="20">Solo para repetir</text>
+      <text x="704" y="236" font-size="20">o modificar</text>
+      <text x="704" y="264" font-size="20">el análisis original.</text>
+
+      <rect x="64" y="392" width="272" height="104" rx="8" fill="#07382f" stroke="#06d6a0" stroke-width="2" />
+      <text x="200" y="424" text-anchor="middle" font-size="24" font-weight="600">Datos incluidos</text>
+      <text x="200" y="452" text-anchor="middle" font-size="20" font-family="'JetBrains Mono', Consolas, monospace">JSON + Parquet</text>
+      <text x="200" y="480" text-anchor="middle" font-size="20">Coordenadas: muestra</text>
+
+      <rect x="400" y="392" width="240" height="104" rx="8" fill="#020817" stroke="#6882a0" />
+      <text x="520" y="432" text-anchor="middle" font-size="24" font-weight="600">Dashboard</text>
+      <text x="520" y="464" text-anchor="middle" font-size="20">Streamlit</text>
+
+      <rect x="704" y="392" width="192" height="104" rx="8" fill="#020817" stroke="#6882a0" />
+      <text x="800" y="432" text-anchor="middle" font-size="24" font-weight="600">Explorar</text>
+      <text x="800" y="464" text-anchor="middle" font-size="20">Gráficos y mapas</text>
+
+      <text x="40" y="552" font-size="24">El mapa usa una muestra de coordenadas.</text>
+      <text x="40" y="584" font-size="20">No representa todos los registros ni consulta GBIF en tiempo real.</text>
+    </g>
+  </svg>
+</main>
+</body>
+</html>
